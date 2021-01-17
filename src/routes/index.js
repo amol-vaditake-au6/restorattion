@@ -284,6 +284,8 @@ if(usertype==='superadmin'){
 } else if (usertype === 'branchcoach') {
 	allRoutes = branchcoach;
   authProtectedRoutes = branchcoachAuthRoutes;
+}else{
+	allRoutes=[rootRoute,authRoutes,dashboardRoutes]
 }
 
 const allFlattenRoutes = flattenRoutes(allRoutes);
