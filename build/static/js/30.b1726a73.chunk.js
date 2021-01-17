@@ -1,2 +1,0 @@
-(this["webpackJsonpshreyu-react"]=this["webpackJsonpshreyu-react"]||[]).push([[30],{609:function(e,t,a){"use strict";a.r(t);var n=a(0),r=a.n(n);t.default=()=>r.a.createElement("div",null,"BranchAdmin")}}]);
-//# sourceMappingURL=30.b1726a73.chunk.js.map
