@@ -150,13 +150,13 @@ const AllClients = () => {
     useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/newClients"
+            "http://localhost:8000/api/newClients"
 				);
 				const branches = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/branches"
+            "http://localhost:8000/api/sAdmin/branches"
 				);
 				const coaches = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/coaches"
+            "http://localhost:8000/api/sAdmin/coaches"
         );
 				if(result){
 					let newClients=result.data.filter(a=>a.branchName!=='Click To Allocate')
@@ -199,7 +199,7 @@ const AllClients = () => {
 		}
 
     const submitBranch = async() => {
-			await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/allocateBranch/${userId}/${branchId}/${branchName}`)
+			await Axios.post(`http://localhost:8000/api/sAdmin/allocateBranch/${userId}/${branchId}/${branchName}`)
 			setShow(false)       
 		};
 
@@ -209,7 +209,7 @@ const AllClients = () => {
 		};
 
 		const submitCoach = async() => {
-			await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
+			await Axios.post(`http://localhost:8000/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
 			setShowCoach(false)       
 		};
 		const handleShow = () => setShow(true);
@@ -285,7 +285,7 @@ const AllClients = () => {
 								{branchOptions.length ? 
 								<select onChange={handleChangeee}>
 								{branchOptions.map((option) => (
-									<option value={branchId}>{option.label}</option>
+									<option value={option.value}>{option.label}</option>
 								))}
               </select>:<div>No branches Availabel</div>}
 								

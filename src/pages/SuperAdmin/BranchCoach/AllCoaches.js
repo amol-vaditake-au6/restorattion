@@ -104,7 +104,7 @@ const AllCoaches = () => {
 				events:{
 					onClick: async(e, column, columnIndex, row) => {							
 					if(localStorage.getItem('usertype')==='superadmin'){
-						let res = await Axios.get(`https://restoration-backend.herokuapp.com/api/sAdmin/getCoach/${row._id}`)
+						let res = await Axios.get(`http://localhost:8000/api/sAdmin/getCoach/${row._id}`)
 						if(res.data){
 							setFormData(res.data)
 							setShow(true)
@@ -122,7 +122,7 @@ const AllCoaches = () => {
 				events:{
 									onClick: async(e, column, columnIndex, row) => {							
 									if(localStorage.getItem('usertype') === 'superadmin'){
-										let res = await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/deleteCoach/${row._id}`)
+										let res = await Axios.post(`http://localhost:8000/api/sAdmin/deleteCoach/${row._id}`)
 										if(res.data.massage === 'done'){
 											alert('Deleted Coach')
 											window.location.reload()
@@ -147,7 +147,7 @@ const AllCoaches = () => {
     useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/coaches"
+            "http://localhost:8000/api/sAdmin/coaches"
         );
         if(result)setRecords(result.data);
     })();
@@ -159,22 +159,27 @@ const AllCoaches = () => {
 			setShow(false)       
 		};
 
-		const submitForm = async() => {			
-			const { DOB , eduQual,full_name, gender, idProof, phone_number } = formData;
-        if (!DOB || !eduQual || !full_name || !gender || !idProof || !phone_number){
-					alert('Fill all the Fields')
-					return
-				}
+		const submitForm = async() => {	
+
+			const { DOB , eduQual,full_name, gender, idProof, phone_number ,userName,password} = formData;
+			if (!DOB || !eduQual || !full_name || !gender || !idProof || !phone_number || !userName|| !password){
+				alert('Fill all the Fields')
+				return
+			}
+			if( formData.password !== formData.confirmPassword ){
+				alert('Password Not Matched Please Enter Again')
+				return
+			}
 			try{
-				await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/newCoach`,{...formData})
+				await Axios.post(`http://localhost:8000/api/sAdmin/newCoach`,{...formData})
 				setShow(false)
 				if(formData._id){
 					alert('Coach Updated')
-				}else{
+				} else{
 					alert('Coach Added')
 				}
 				window.location.reload()
-			}catch(err){
+			} catch(err){
 				alert('Duplicate values found , please check all values ')
 			}     
 		};
@@ -309,6 +314,22 @@ const AllCoaches = () => {
 													<option>Other</option>
 												</Form.Control>
 										</Col>
+										</Row>
+										<Row>
+											<Col>
+											<Form.Label>User Name (For login)</Form.Label>
+											<Form.Control required value={formData.userName} type='text'  name="userName" onChange={handleFormData} />
+											</Col>
+										</Row>
+										<Row>											
+											<Col>
+												<Form.Label>Password(For login)</Form.Label>
+												<Form.Control type='password' name="password" onChange={handleFormData}/>			
+											</Col>
+											<Col>
+												<Form.Label>Confirm Password</Form.Label>
+												<Form.Control type='password' name="confirmPassword" onChange={handleFormData}/>							
+											</Col>
 										</Row>
 									</Form.Row>
 								</Form>								

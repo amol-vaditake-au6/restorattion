@@ -56,20 +56,21 @@ class Login extends Component {
 
     SuperAdminHandler = () => {
 				localStorage.setItem('usertype', 'superadmin');
-				this.props.loginUser(this.state.username, this.state.password);
-				setTimeout(function(){window.location.reload() }, 3000);
+				this.props.loginUser(this.state.username, this.state.password,'sAdmin');
     };
 
-    BranchAdminHandler = () => {
-        localStorage.setItem('usertype', 'branchadmin');
-				this.props.loginUser(this.state.username, this.state.password);
-				setTimeout(function(){window.location.reload() }, 3000);
+    BranchAdminHandler =( ) => {
+			  localStorage.setItem('usertype', 'branchadmin');
+				this.props.loginUser(this.state.username, this.state.password,'bAdmin');
     };
+
+		handleChange=(e)=>{
+      this.setState({[e.target.name]: e.target.value});	
+		}
 
     BranchCoachHandler = () => {
         localStorage.setItem('usertype', 'branchcoach');
-				this.props.loginUser(this.state.username, this.state.password);
-				setTimeout(function(){window.location.reload() }, 3000);
+				this.props.loginUser(this.state.username, this.state.password,'coach');
     };
 
     /**
@@ -116,6 +117,7 @@ class Login extends Component {
 
                                                     {this.props.error && (
                                                         <Alert color="danger" isOpen={this.props.error ? true : false}>
+																													{console.log(this.props)}
                                                             <div>{this.props.error}</div>
                                                         </Alert>
                                                     )}
@@ -136,7 +138,8 @@ class Login extends Component {
                                                                     name="username"
                                                                     id="username"
                                                                     placeholder="hello@coderthemes.com"
-                                                                    value={this.state.username}
+																																		value={this.state.username}
+																																		onChange={this.handleChange}
                                                                     required
                                                                 />
                                                             </InputGroup>
@@ -162,7 +165,8 @@ class Login extends Component {
                                                                     name="password"
                                                                     id="password"
                                                                     placeholder="Enter your password"
-                                                                    value={this.state.password}
+																																		value={this.state.password}
+																																		onChange={this.handleChange}
                                                                     required
                                                                 />
                                                             </InputGroup>

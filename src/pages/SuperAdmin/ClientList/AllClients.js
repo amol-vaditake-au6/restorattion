@@ -45,7 +45,7 @@ const AllClients = () => {
 		const [records,setRecords]=useState([])
 		
 		const [userId,setUserId]=useState('')
-			const columns = [
+		const columns = [
 				{
 						text: 'Client ID',
 						dataField: '_id',
@@ -124,11 +124,11 @@ const AllClients = () => {
 								return { 'white-space': 'nowrap' };
 						},
 						events: {
-						onClick: (e, column, columnIndex, row) => {							
-							if(localStorage.getItem('usertype')==='superadmin'){
-							setUserId(row._id);
-							handleShow()
-							}
+							onClick: (e, column, columnIndex, row) => {							
+								if(localStorage.getItem('usertype')==='superadmin'){
+								setUserId(row._id);
+								handleShow()
+								}
 						},
 				},
 						sort: true,
@@ -144,19 +144,19 @@ const AllClients = () => {
 		];
     const { SearchBar } = Search;
 		const { ExportCSVButton } = CSVExport;
-		const [branchOptions, setBranchOptions] = useState([{label:'Choose',value:'choose'}]);
-		const [coachOptions, setCoachOptions] = useState([{label:'Choose',value:'choose'}]);
+		const [branchOptions, setBranchOptions] = useState([]);
+		const [coachOptions, setCoachOptions] = useState([]);
 
     useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/newClients"
+            "http://localhost:8000/api/newClients"
 				);
 				const branches = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/branches"
+            "http://localhost:8000/api/sAdmin/branches"
 				);
 				const coaches = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/coaches"
+            "http://localhost:8000/api/sAdmin/coaches"
         );
 				if(result){
 					let newClients=result.data.filter(a=>a.branchName==='Click To Allocate')
@@ -184,9 +184,10 @@ const AllClients = () => {
 		const [branchName, setBranchName] = useState();
 		const [coachName, setCoachName] = useState();
 
-		const handleChangeee=(e)=>{
+		const handleChange=(e)=>{
 			let index = e.nativeEvent.target.selectedIndex;
 			let label = e.nativeEvent.target[index].text;
+			console.log(e.target.value,label)
 			setBranchId(e.target.value)
 			setBranchName(label)			
 		}
@@ -199,7 +200,7 @@ const AllClients = () => {
 		}
 
     const submitBranch = async() => {
-			await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/allocateBranch/${userId}/${branchId}/${branchName}`)
+			await Axios.post(`http://localhost:8000/api/sAdmin/allocateBranch/${userId}/${branchId}/${branchName}`)
 			setShow(false)       
 		};
 
@@ -209,7 +210,7 @@ const AllClients = () => {
 		};
 
 		const submitCoach = async() => {
-			await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
+			await Axios.post(`http://localhost:8000/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
 			setShowCoach(false)       
 		};
 		const handleShow = () => setShow(true);
@@ -283,9 +284,9 @@ const AllClients = () => {
 							<Modal.Body>
 								<label>Select Branch </label>
 								{branchOptions.length ? 
-								<select onChange={handleChangeee}>
+								<select onChange={handleChange}>
 								{branchOptions.map((option) => (
-									<option value={branchId}>{option.label}</option>
+									<option value={option.value}>{option.label}</option>
 								))}
               </select>:<div>No branches Availabel</div>}
 								

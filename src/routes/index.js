@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import * as FeatherIcon from 'react-feather';
 
-import { isUserAuthenticated, getLoggedInUser } from '../helpers/authUtils';
+import { isUserAuthenticated } from '../helpers/authUtils';
 
 // auth
 const Login = React.lazy(() => import('../pages/auth/Login'));
@@ -20,12 +20,14 @@ const Dashboard = React.lazy(() => import('../pages/dashboard'));
 const BranchAdmin = React.lazy(() => import('../pages/SuperAdmin/BranchAdmin'));
 const NewOnlineClients = React.lazy(() => import('../pages/SuperAdmin/ClientList/NewOnlineClients'));
 const AllClients = React.lazy(() => import('../pages/SuperAdmin/ClientList/AllClients'));
+const AdminClients = React.lazy(() => import('../pages/BranchAdmin/myClients'));
 const AllBranches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/AllBranches'));
 const AllCoaches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/AllCoaches'));
 
 // handle auth and authorization
-const PrivateRoute = ({ component: Component, roles, ...rest }) => (
-    <Route
+const PrivateRoute = ({ component: Component, roles, ...rest }) => {
+	console.log(roles, rest)
+	return (<Route
         {...rest}
         render={(props) => {
             if (!isUserAuthenticated()) {
@@ -33,18 +35,11 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
                 return <Redirect to={{ pathname: '/account/login', state: { from: props.location } }} />;
             }
 
-            const loggedInUser = getLoggedInUser();
-            // check if route is restricted by role
-            if (roles && roles.indexOf(loggedInUser.role) === -1) {
-                // role not authorised so redirect to home page
-                return <Redirect to={{ pathname: '/' }} />;
-            }
-
             // authorised so return component
             return <Component {...props} />;
         }}
-    />
-);
+    />)
+}
 
 // const usertype = localStorage.getItem('usertype');
 
@@ -67,7 +62,7 @@ const dashboardRoutes = {
         text: '1',
     },
     component: Dashboard,
-    roles: ['Admin'],
+
     route: PrivateRoute,
 };
 
@@ -84,28 +79,28 @@ const superAdminRoutesNew = {
             name: 'New Online Clients',
             component: NewOnlineClients,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
         {
             path: '/superadmin/allclients',
             name: 'All Clients',
             component: AllClients,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
 				},
 				{
             path: '/superadmin/branch/allbranches',
             name: 'All Branches',
             component: AllBranches,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
 				},
 				{
             path: '/superadmin/branch/allcoaches',
             name: 'All Coaches',
             component: AllCoaches,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
     ],
 };
@@ -119,16 +114,16 @@ const branchAdminRoutesNew = {
         {
             path: '/admin/dashboard',
             name: 'My Online Clients',
-            component: AllClients,
+            component: AdminClients,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
 				{
             path: '/superadmin/branch/allcoaches',
             name: 'All Coaches',
             component: AllCoaches,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
     ],
 };
@@ -155,49 +150,49 @@ const BranchCoachClientRoutes = {
             name: 'Daily Checklist',
             component: BranchAdmin,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
         {
             path: '/branchcoach/client/menu',
             name: 'Daily Menu',
             component: BranchAdmin,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
         {
             path: '/branchcoach/client/repost',
             name: 'Medical Repost',
             component: BranchAdmin,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
         {
             path: '/branchcoach/client/prescription',
             name: 'Prescription',
             component: BranchAdmin,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
         {
             path: '/branchcoach/client/profile',
             name: 'Profile',
             component: BranchAdmin,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
         {
             path: '/branchcoach/client/feedback',
             name: 'Feedback',
             component: BranchAdmin,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
         {
             path: '/branchcoach/client/health',
             name: 'Health Progress',
             component: BranchAdmin,
             route: PrivateRoute,
-            roles: ['Admin'],
+        
         },
     ],
 };

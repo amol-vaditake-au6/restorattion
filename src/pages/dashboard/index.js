@@ -3,7 +3,6 @@ import { Row, Col, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, Dropd
 import Flatpickr from 'react-flatpickr'
 import { ChevronDown, Mail, Printer, File, Users, Image, ShoppingBag } from 'react-feather';
 
-import { getLoggedInUser } from '../../helpers/authUtils';
 import Loader from '../../components/Loader';
 import OverviewWidget from '../../components/OverviewWidget';
 
@@ -19,7 +18,6 @@ class Dashboard extends Component {
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 15);
 
         this.state = {
-            user: getLoggedInUser(),
             filterDate: [oneWeekAgo, new Date()]
         };
     }

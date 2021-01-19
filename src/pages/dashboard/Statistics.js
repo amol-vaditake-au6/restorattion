@@ -9,13 +9,13 @@ const Statistics = () => {
 	useEffect(() => {
     (async () => {
         const user = await axios.get(
-            "https://restoration-backend.herokuapp.com/api/newClients"
+            "http://localhost:8000/api/newClients"
 				);
 				const branches = await axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/branches"
+            "http://localhost:8000/api/sAdmin/branches"
 				);
 				const coaches = await axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/coaches"
+            "http://localhost:8000/api/sAdmin/coaches"
         );
         setRecords({user:user.data?.length,branches:branches.data?.length,coaches:coaches.data?.length});
     })();

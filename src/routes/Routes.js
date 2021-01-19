@@ -71,7 +71,7 @@ class Routes extends Component {
                                 <route.route
                                     key={index}
                                     path={route.path}
-                                    roles={route.roles}
+                                    roles={localStorage.getItem('role')}
                                     exact={route.exact}
                                     component={route.component}></route.route>
                                 : null

@@ -36,15 +36,27 @@ const sizePerPageRenderer = ({ options, currSizePerPage, onSizePerPageChange }) 
 
 const AllBranches = () => {
 
-    const [records,setRecords]=useState([])
+		const [records,setRecords]=useState([])
+		const [adminOptions, setAdminOptions] = useState([]);
     const { SearchBar } = Search;
     const { ExportCSVButton } = CSVExport;
 		useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "https://restoration-backend.herokuapp.com/api/sAdmin/branches"
+            "http://localhost:8000/api/sAdmin/branches"
         );
-        if(result)setRecords(result.data);
+				if(result)setRecords(result.data);
+				
+				const admins = await Axios.get(
+            "http://localhost:8000/api/sAdmin/getAdmins"
+				);
+
+				let adminOptionsAll;
+				if(admins) adminOptionsAll = admins?.data?.map(a=>{return {value:a._id,label:a.userName}})
+				if(adminOptionsAll.length){
+					adminOptionsAll.unshift({label:'Choose',value:''})
+					setAdminOptions(adminOptionsAll)
+				}
     })();
     }, []);
 		const [show, setShow] = useState(false);
@@ -53,7 +65,8 @@ const AllBranches = () => {
 
 		const handleClose = () => {
 			setShow(false)
-			setShowAdmin(false)       
+			setShowAdmin(false) 
+			setAllocateAdmin(false)      
 		};
 
 		const submitForm = async() => {
@@ -63,7 +76,7 @@ const AllBranches = () => {
 					return
 				}
 			try {
-				await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/newBranch`,{...formData})				
+				await Axios.post(`http://localhost:8000/api/sAdmin/newBranch`,{...formData})				
 				setShow(false)
 				if(formData._id){
 					alert('Branch Updated')
@@ -81,7 +94,19 @@ const AllBranches = () => {
 				alert('Password Not Matched Please Enter Again')
 				return
 			}
-			setShowAdmin(false)       
+			const { userName ,adminName, password} = formData;
+			if (!userName ||!adminName|| !password) {
+					alert('Fill All the Fileds')
+					return
+			} 
+			let res = await Axios.post(`http://localhost:8000/api/sAdmin/newAdmin`,{...formData})
+			if(res.data.massage==='done'){
+				alert('Admin Added successfully')				
+			  setShowAdmin(false) 
+			} else{
+				alert('Validation error')
+				return
+			}     
 		};
 
 		const handleShow = () => {
@@ -107,7 +132,13 @@ const AllBranches = () => {
 					<Button>Edit</Button>
 				);
 		}
+	 const [branchId,setBranchId]=useState('')
 
+	 let [allocateAdmin,setAllocateAdmin] = useState(false)
+
+	 let handleAdminAllocateShow= ()=>{
+		 setAllocateAdmin(true)
+	 }
 	 const columns = [
 				{
 						text: 'Branch ID',
@@ -164,6 +195,14 @@ const AllBranches = () => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
+						events: {
+							onClick: (e, column, columnIndex, row) => {							
+								if(localStorage.getItem('usertype')==='superadmin'){
+									setBranchId(row._id);
+									handleAdminAllocateShow()
+								}
+						},
+					}
 				},
 				{
 						text: 'Contact',
@@ -194,7 +233,7 @@ const AllBranches = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-							  let res = await Axios.get(`https://restoration-backend.herokuapp.com/api/sAdmin/getBranch/${row._id}`)
+							  let res = await Axios.get(`http://localhost:8000/api/sAdmin/getBranch/${row._id}`)
 			          if(res.data){
 									setFormData(res.data)
 									setShow(true)
@@ -212,7 +251,7 @@ const AllBranches = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-							  let res = await Axios.post(`https://restoration-backend.herokuapp.com/api/sAdmin/deleteBranch/${row._id}`)
+							  let res = await Axios.post(`http://localhost:8000/api/sAdmin/deleteBranch/${row._id}`)
 			          if(res.data.massage === 'done'){
 									alert('Deleted Branch')
 									window.location.reload()
@@ -230,7 +269,28 @@ const AllBranches = () => {
 						order: 'asc',
 				},
 		];
-		
+	  const [adminId, setAdminId] = useState();
+		const [adminName, setAdminName] = useState();
+		const handleChange=(e)=>{
+			let index = e.nativeEvent.target.selectedIndex;
+			let label = e.nativeEvent.target[index].text;
+			setAdminId(e.target.value)
+			setAdminName(label)			
+		}
+		let submitAdmin=async()=>{
+			try {
+				let res = await Axios.post(`http://localhost:8000/api/sAdmin/allocateAdmin/${branchId}`,{adminName,adminId})	
+				if(res.data.massage === 'done'){
+					alert('Admin Added')					
+				  setShow(false)					
+				  window.location.reload()
+				} else {
+				  alert(res.data.massage)
+				}
+			} catch(err){
+         alert('Failed')
+			} 
+		}
     return (
         <React.Fragment>
             <Row className="page-title">
@@ -362,7 +422,7 @@ const AllBranches = () => {
 						</Modal>
 						<Modal show={showAdmin} onHide={handleClose}>
 							<Modal.Header closeButton>
-								<Modal.Title>Add New Coach</Modal.Title>
+								<Modal.Title>Add New Admin</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
 								<Form>
@@ -370,7 +430,7 @@ const AllBranches = () => {
 										<Row>
 											<Col>
 											  <Form.Label>Admin Name</Form.Label>
-											  <Form.Control required onChange={handleFormData} name="name" placeholder="Name" />
+											  <Form.Control required onChange={handleFormData} name="userName" placeholder="User Name" />
 										  </Col>
 											<Col>
 											  <Form.Label>Admin Id</Form.Label>
@@ -396,6 +456,30 @@ const AllBranches = () => {
 								</Button>
 								<Button variant="primary" onClick={submitFormAdmin}>
 									Submit
+								</Button>
+							</Modal.Footer>
+						</Modal>
+
+						<Modal show={allocateAdmin} onHide={handleClose}>
+							<Modal.Header closeButton>
+								<Modal.Title>Allocate Admin</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								<label>Select Admin</label>
+								{adminOptions.length ? 
+								<select onChange={handleChange}>
+								{adminOptions.map((option) => (
+									<option value={option.value}>{option.label}</option>
+								))}
+              </select>:<div>No Admins Availabel</div>}
+								
+							</Modal.Body>
+							<Modal.Footer>
+								<Button variant="secondary" onClick={handleClose}>
+									Close
+								</Button>
+								<Button variant="primary" onClick={submitAdmin}>
+									Allocate Admin
 								</Button>
 							</Modal.Footer>
 						</Modal>

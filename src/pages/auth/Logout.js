@@ -7,7 +7,7 @@ import { logoutUser } from '../../redux/actions';
 class Logout extends Component {
 
     componentDidMount() {
-			  localStorage.removeItem('usertype')
+			  localStorage.clear()
         this.props.logoutUser(this.props.history);
     }
 

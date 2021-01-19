@@ -28,17 +28,27 @@ const setSession = user => {
  * Login the user
  * @param {*} payload - username and password
  */
-function* login({ payload: { username, password } }) {
+function* login({ payload: { username, password , type } }) {
     const options = {
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ userName:username, password }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
     };
 
     try {
-        const response = yield call(fetchJSON, '/users/authenticate', options);
-        setSession(response);
-        yield put(loginUserSuccess(response));
+			  console.log(type)
+				const response = yield call(fetchJSON, `http://localhost:8000/api/${type}/login`, options);
+				if(response.massage === 'done'){
+					let {token , id ,role } = response
+					let responseJson= { token , id, role }
+					localStorage.setItem('id',id)
+					localStorage.setItem('token',token)
+					localStorage.setItem('role',role)
+					setSession({ ok: true, json: () => responseJson })					
+					yield put(loginUserSuccess(response));
+					return
+				}
+				throw response.massage
     } catch (error) {
         let message;
         switch (error.status) {
