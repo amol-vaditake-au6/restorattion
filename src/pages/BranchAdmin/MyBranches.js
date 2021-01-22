@@ -1,7 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import Axios from 'axios';
-import { Button ,Modal} from 'react-bootstrap';
-
 import {
     Row,
     Col,
@@ -15,12 +13,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import PageTitle from '../../components/PageTitle';
 
-const defaultSorted = [
-    {
-        dataField: 'id',
-        order: 'asc',
-    },
-];
+
 
 const sizePerPageRenderer = ({ options, currSizePerPage, onSizePerPageChange }) => (
     <React.Fragment>
@@ -40,14 +33,25 @@ const sizePerPageRenderer = ({ options, currSizePerPage, onSizePerPageChange }) 
     </React.Fragment>
 );
 
-const AllClients = () => {
-	
+const AllBranches = () => {
+
 		const [records,setRecords]=useState([])
-		
-		const [userId,setUserId]=useState('')
-			const columns = [
+    const { SearchBar } = Search;
+    const { ExportCSVButton } = CSVExport;
+		useEffect(() => {
+    (async () => {
+        const result = await Axios.get(
+            "http://localhost:8000/api/sAdmin/branches"
+				);
+				let myResults = result?.data?.filter(b=>b.adminId===localStorage.getItem('id'))
+				if(myResults)setRecords(myResults);
+    })();
+    }, []);		
+
+
+	 const columns = [
 				{
-						text: 'Client ID',
+						text: 'Branch ID',
 						dataField: '_id',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
@@ -56,141 +60,93 @@ const AllClients = () => {
 				},
 				{
 						text: 'Name',
-						dataField: 'full_name',
+						dataField: 'name',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
 				},
 				{
-						text: 'Age',
-						dataField: 'age',
+						text: 'GPS Location',
+						dataField: 'GPSlocation',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
 				},
 				{
-						text: 'Gender',
-						dataField: 'gender',
+						text: 'Address',
+						dataField: 'address',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
 				},
 				{
-						text: 'Coach',
-						dataField: 'coachName',
+						text: 'District',
+						dataField: 'district',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
-						events: {
-						onClick: (e, column, columnIndex, row) => {
-							if(localStorage.getItem('usertype')==='branchadmin'){														
-							 setUserId(row._id);
-							 handleShowCoach()	
-							}
-						},}
 				},
 				{
-						text: 'Status',
-						dataField: 'status',
+						text: 'State',
+						dataField: 'state',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
+				},
+				{
+						text: 'Admin',
+						dataField: 'adminName',
+						headerStyle: (colum, colIndex) => {
+								return { 'white-space': 'nowrap' };
+						},
+						sort: true,					
 				},
 				{
 						text: 'Contact',
-						dataField: 'phone_number',
+						dataField: 'adminContact',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
 				},
 				{
-						text: 'City',
-						dataField: 'city',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
+						text: 'Active Clients',
+						dataField: 'active_clients',
 						sort: true,
 				},
 				{
-						text: 'Branch Name',
-						dataField: 'branchName',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
-						sort: true,
-				},
-				{
-						text: 'Mode',
-						dataField: 'mode',
+						text: 'Coaches',
+						dataField: 'coaches',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
 				},
 		];
-    const { SearchBar } = Search;
-		const { ExportCSVButton } = CSVExport;
-		const [coachOptions, setCoachOptions] = useState([{label:'Choose',value:'choose'}]);
 
-    useEffect(() => {
-    (async () => {
-        const result = await Axios.get(
-            `http://localhost:8000/api/bAdmin/myClients/${localStorage.getItem('id')}`
-				);
-				const coaches = await Axios.get(
-            "http://localhost:8000/api/sAdmin/coaches"
-				);
+		const defaultSorted = [
+				{
+						dataField: 'id',
+						order: 'asc',
+				},
+		];
 
-				if(result)setRecords(result.data);
-
-				let coachOptionsAll;
-				if(coaches) coachOptionsAll = coaches?.data?.map(a=>{return {value:a._id,label:a.full_name}})
-				if(coachOptionsAll.length){
-					coachOptionsAll.unshift({label:'Choose',value:''})
-					setCoachOptions(coachOptionsAll)
-				}
-    })();
-		}, []);
-
-		const [showCoach, setShowCoach] = useState(false);
-		const [coachId, setCoachId] = useState();
-		const [coachName, setCoachName] = useState();
-
-
-		const handleChangeCoach=async(e)=>{
-			let index = e.nativeEvent.target.selectedIndex;
-      let label = e.nativeEvent.target[index].text;
-			setCoachId(e.target.value)
-			setCoachName(label)			
-		}
-
-
-    const handleCloseCommon = async() => { 
-			setShowCoach(false)      
-		};
-
-		const submitCoach = async() => {
-			await Axios.post(`http://localhost:8000/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
-			setShowCoach(false)       
-		};
-		const handleShowCoach = () => setShowCoach(true);
     return (
         <React.Fragment>
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
                         breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/clientlist/allclients' },
-                            { label: 'ClientList', path: '/superadmin/clientlist/allclients' },
-                            { label: 'AllClients', path: '/superadmin/clientlist/allclients', active: true },
+                            { label: 'SuperAdmin', path: '/superadmin/branchcoach/allbranches' },
+                            { label: 'ClientList', path: '/superadmin/branchcoach/allbranches' },
+                            { label: 'AllClients', path: '/superadmin/branchcoach/allbranches', active: true },
                         ]}
-                        title={'All Clients'}
+                        title={'All Branches'}
                     />
                 </Col>
             </Row>
@@ -203,7 +159,8 @@ const AllClients = () => {
                                 keyField="id"
                                 data={records}
                                 columns={columns}
-                                search
+																search
+																deleteRow={ true }
                                 exportCSV={{ onlyExportFiltered: true, exportAll: false }}>
                                 {(props) => (
                                     <React.Fragment>
@@ -212,12 +169,11 @@ const AllClients = () => {
                                                 <SearchBar {...props.searchProps} />
                                             </Col>
                                             <Col className="text-right">
-                                                <ExportCSVButton {...props.csvProps} className="btn btn-primary">
+                                              <ExportCSVButton {...props.csvProps} className="btn btn-primary">
                                                     Export CSV
-                                                </ExportCSVButton>
+                                              </ExportCSVButton>
                                             </Col>
                                         </Row>
-
                                         {records.length ?
 																				<BootstrapTable
                                             {...props.baseProps}
@@ -230,11 +186,11 @@ const AllClients = () => {
                                                     { text: '5', value: 5 },
                                                     { text: '10', value: 10 },
                                                     { text: '25', value: 25 },
-                                                    { text: 'All', value: records.length },
+                                                    { text: 'All', value: records?.length || 0 },
                                                 ],
                                             })}
                                             wrapperClasses="table-responsive"
-                                        />:<h3 style={{textAlign:'center'}}>No Clients Found</h3>}
+                                        />:<h3 style={{textAlign:'center'}}>No Branches Found</h3>}
                                     </React.Fragment>
                                 )}
                             </ToolkitProvider>
@@ -242,30 +198,10 @@ const AllClients = () => {
                     </Card>
                 </Col>
             </Row>
-						<Modal show={showCoach} onHide={handleCloseCommon}>
-							<Modal.Header closeButton>
-								<Modal.Title>Allocate Coach</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-								<label>Select Coach </label>
-								{coachOptions.length ? <select onChange={handleChangeCoach}>
-								{coachOptions.map((option) => (
-									<option value={option.value}>{option.label}</option>
-								))}
-              </select>:<div>No coaches Availabel</div>}
-								
-								</Modal.Body>
-							<Modal.Footer>
-								<Button variant="secondary" onClick={handleCloseCommon}>
-									Close
-								</Button>
-								<Button variant="primary" onClick={submitCoach}>
-									Allocate Coach
-								</Button>
-							</Modal.Footer>
-						</Modal>
+						<Row>
+						</Row>
         </React.Fragment>
     );
 };
 
-export default AllClients;
+export default AllBranches;

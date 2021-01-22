@@ -29,6 +29,7 @@ const setSession = user => {
  * @param {*} payload - username and password
  */
 function* login({ payload: { username, password , type } }) {
+	  console.log(type)
     const options = {
         body: JSON.stringify({ userName:username, password }),
         method: 'POST',
@@ -36,7 +37,6 @@ function* login({ payload: { username, password , type } }) {
     };
 
     try {
-			  console.log(type)
 				const response = yield call(fetchJSON, `http://localhost:8000/api/${type}/login`, options);
 				if(response.massage === 'done'){
 					let {token , id ,role } = response
@@ -48,7 +48,7 @@ function* login({ payload: { username, password , type } }) {
 					yield put(loginUserSuccess(response));
 					return
 				}
-				throw response.massage
+				throw response.massage 
     } catch (error) {
         let message;
         switch (error.status) {

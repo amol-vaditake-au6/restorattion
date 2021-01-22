@@ -23,9 +23,10 @@ class Dashboard extends Component {
     }
 
     render() {
-
+			let user=localStorage.getItem('usertype')
         return (
             <React.Fragment>
+							{console.log(user)}
                 <div className="">
                     { /* preloader */}
                     {this.props.loading && <Loader />}

@@ -30,12 +30,12 @@
                     color: $gray-600; 
                 }
                 &:after{
-                    background: $primary;
+                    background: $success;
                 }
             }
             &.active{
                 >a{
-                    color: $primary !important;
+                    color: $success !important;
                 }
             }
             &.done{
@@ -73,23 +73,23 @@
             }
             &.active{
                 >a{
-                    background: $primary !important;
-                    border-color: $primary !important;
+                    background: $success !important;
+                    border-color: $success !important;
                     &:after{
-                        border-left-color: $primary !important;
+                        border-left-color: $success !important;
                     }
                 }
             }
 
             &.done{
                 >a{
-                    background: lighten($primary, 24%) !important;
-                    border-color: lighten($primary, 24%) !important;
+                    background: lighten($success, 24%) !important;
+                    border-color: lighten($success, 24%) !important;
                     &:after{
-                        border-left-color: lighten($primary, 24%) !important;
+                        border-left-color: lighten($success, 24%) !important;
                     }
                     &::before{
-                        border-left-color: $primary !important;
+                        border-left-color: $success !important;
                     }
                 }
             }
@@ -135,11 +135,11 @@
             }
             &.active{
                 >a{
-                    background: $primary !important;
-                    border-color: $primary !important;
+                    background: $success !important;
+                    border-color: $success !important;
                     color: $white !important;
                     >small{
-                        color: $primary;
+                        color: $success;
                     }
                 }
             }
@@ -184,9 +184,9 @@
             }
             &.active{
                 >a{
-                    color: $primary;
+                    color: $success;
                     &:after{
-                        background: $primary;
+                        background: $success;
                     }
                 }
             }

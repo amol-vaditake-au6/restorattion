@@ -70,8 +70,8 @@ const AllBranches = () => {
 		};
 
 		const submitForm = async() => {
-			const { GPSlocation, address, district, state, adminName='Click To Allocate', adminContact, email,name} = formData;
-        if (!GPSlocation || !address || !district || !state || !adminName || !adminContact || !email || !name){
+			const { GPSlocation, address, district, state, adminName='Click To Allocate', email,name} = formData;
+        if (!GPSlocation || !address || !district || !state || !adminName ||  !email || !name){
 					alert('Fill all the Fields')
 					return
 				}
@@ -94,8 +94,8 @@ const AllBranches = () => {
 				alert('Password Not Matched Please Enter Again')
 				return
 			}
-			const { userName ,adminName, password} = formData;
-			if (!userName ||!adminName|| !password) {
+			const { userName ,adminName, password,adminContact} = formData;
+			if (!userName ||!adminName|| !password || !adminContact) {
 					alert('Fill All the Fileds')
 					return
 			} 
@@ -113,9 +113,6 @@ const AllBranches = () => {
 			setShow(true)       
 		};
 
-		const handleShowAdmin = () => {
-			setShowAdmin(true)       
-		};
 
 		const handleFormData = e => {
       setFormData({ ...formData,[e.target.name]: e.target.value });
@@ -149,8 +146,8 @@ const AllBranches = () => {
 						sort: true,
 				},
 				{
-						text: 'Location',
-						dataField: 'location',
+						text: 'Name',
+						dataField: 'name',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
@@ -279,7 +276,7 @@ const AllBranches = () => {
 		}
 		let submitAdmin=async()=>{
 			try {
-				let res = await Axios.post(`http://localhost:8000/api/sAdmin/allocateAdmin/${branchId}`,{adminName,adminId})	
+				let res = await Axios.post(`http://localhost:8000/api/sAdmin/allocateAdmin/${branchId}`,{ adminName, adminId})	
 				if(res.data.massage === 'done'){
 					alert('Admin Added')					
 				  setShow(false)					
@@ -329,7 +326,8 @@ const AllBranches = () => {
                                               </ExportCSVButton>
                                             </Col>
                                         </Row>
-                                        <BootstrapTable
+                                        {records.length ?
+																				<BootstrapTable
                                             {...props.baseProps}
                                             bordered={false}
                                             defaultSorted={defaultSorted}
@@ -344,7 +342,7 @@ const AllBranches = () => {
                                                 ],
                                             })}
                                             wrapperClasses="table-responsive"
-                                        />
+                                        />:<h3 style={{textAlign:'center'}}>No Branches Found</h3>}
                                     </React.Fragment>
                                 )}
                             </ToolkitProvider>
@@ -354,16 +352,13 @@ const AllBranches = () => {
             </Row>
 						<Row>
 						<Col className="text-right">
-							  <button className="btn btn-primary" onClick={handleShowAdmin} style={{marginRight:'20px'}}>
-                  Add New Admin
-                </button>
                 <button className="btn btn-primary" onClick={handleShow}>
                   Add New Branch
                 </button>
             </Col>
 						<Modal show={show} onHide={handleClose}>
 							<Modal.Header closeButton>
-								<Modal.Title>Add New Coach</Modal.Title>
+								<Modal.Title>Add New Branch</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
 								<Form>
@@ -372,20 +367,10 @@ const AllBranches = () => {
 											<Col>
 											  <Form.Label>Branch Name</Form.Label>
 											  <Form.Control value={formData.name} required onChange={handleFormData} name="name" placeholder="Name" />
-										  </Col>
-											<Col>
-											  <Form.Label>Admin Name</Form.Label>
-											  <Form.Control value={formData.adminName} required onChange={handleFormData} name="adminName" placeholder="Name" />
-										  </Col>
-										</Row>
-										<Row>
+										  </Col>											
 											<Col>
 											<Form.Label>Emails Id</Form.Label>
 											<Form.Control required  name="email" onChange={handleFormData} value={formData.email} placeholder="Email" />
-											</Col>
-											<Col>
-												<Form.Label>Contact Number</Form.Label>
-												<Form.Control required  type='number' name="adminContact" value={formData.adminContact} onChange={handleFormData} placeholder="Contact Number" />
 											</Col>
 										</Row>
 										<Row>
@@ -445,6 +430,12 @@ const AllBranches = () => {
 											<Col>
 											<Form.Label>Confirm Password</Form.Label>
 											<Form.Control required type='password' name="confirmPassword" onChange={handleFormData} placeholder="confirm password" />
+											</Col>
+										</Row>
+										<Row>
+											<Col>
+											<Form.Label>Contact Number</Form.Label>
+											<Form.Control required type='number' name="adminContact" onChange={handleFormData} placeholder="Contact Number" />
 											</Col>
 										</Row>
 									</Form.Row>

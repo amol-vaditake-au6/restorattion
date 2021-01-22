@@ -45,14 +45,14 @@
     &.selected.nextMonthDay,
     &.startRange.nextMonthDay,
     &.endRange.nextMonthDay {
-        background: $primary  !important;
-        border-color: $primary  !important;
+        background: $success  !important;
+        border-color: $success  !important;
     }
 
     &.selected.startRange+.endRange:not(:nth-child(7n+1)),
     &.startRange.startRange+.endRange:not(:nth-child(7n+1)),
     &.endRange.startRange+.endRange:not(:nth-child(7n+1)) {
-        box-shadow: -10px 0 0 $primary  !important;
+        box-shadow: -10px 0 0 $success  !important;
     }
 
     &.today {
@@ -111,7 +111,7 @@
 
 .flatpickr-months {
 
-    // background: $primary;
+    // background: $success;
     .flatpickr-month {
         height: 48px !important;
     }
@@ -135,7 +135,7 @@
 }
 
 .flatpickr-weekdays {
-    background: $primary !important;
+    background: $success !important;
 }
 
 .flatpickr-weekday {

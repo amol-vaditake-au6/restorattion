@@ -41,8 +41,8 @@
     }
 
     .ctext-wrap {
-        background: lighten($primary, 32%);
-        color: $primary;
+        background: lighten($success, 32%);
+        color: $success;
         border-radius: $border-radius;
         display: inline-block;
         padding: 4px 12px;
@@ -71,10 +71,10 @@
             width: 0;
             position: absolute;
             pointer-events: none;
-            border-top-color: lighten($primary, 32%);
+            border-top-color: lighten($success, 32%);
             border-width: 6px;
             margin-left: -1px;
-            border-right-color: lighten($primary, 32%);
+            border-right-color: lighten($success, 32%);
         }
     }
 

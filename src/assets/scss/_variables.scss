@@ -68,7 +68,7 @@ $colors: map-merge(
   $colors
 );
 
-$primary:       $blue;
+$success:       $blue;
 $secondary:     #1e2139;
 $success:       $green;
 $info:          $cyan;
@@ -171,7 +171,7 @@ $body-color:                $gray-600;
 //
 // Style anchor elements.
 
-$link-color:                              theme-color("primary");
+$link-color:                              theme-color("success");
 $link-decoration:                         none;
 $link-hover-color:                        darken($link-color, 15%);
 $link-hover-decoration:                   underline;
@@ -245,7 +245,7 @@ $box-shadow:                  0 .5rem 1rem rgba($black, .15);
 $box-shadow-lg:               0 1rem 3rem rgba($black, .175);
 
 
-$component-active-bg:         $primary;
+$component-active-bg:         $success;
 
 $caret-width:                 .3em;
 $caret-vertical-align:        $caret-width * .85;
@@ -487,7 +487,7 @@ $input-border-radius-lg:                $border-radius-lg;
 $input-border-radius-sm:                $border-radius-sm;
 
 $input-focus-bg:                        $input-bg;
-$input-focus-border-color:              $primary; // $input-border-color
+$input-focus-border-color:              $success; // $input-border-color
 $input-focus-color:                     $input-color;
 $input-focus-width:                     $input-btn-focus-width;
 $input-focus-box-shadow:                none;
@@ -540,8 +540,8 @@ $custom-control-indicator-disabled-bg:          $input-disabled-bg;
 $custom-control-label-disabled-color:           $gray-600;
 
 $custom-control-indicator-checked-color:        $component-active-color;
-$custom-control-indicator-checked-bg:           $primary;
-$custom-control-indicator-checked-disabled-bg:  rgba(theme-color("primary"), .5);
+$custom-control-indicator-checked-bg:           $success;
+$custom-control-indicator-checked-disabled-bg:  rgba(theme-color("success"), .5);
 $custom-control-indicator-checked-box-shadow:   none;
 $custom-control-indicator-checked-border-color: $custom-control-indicator-checked-bg;
 
@@ -995,7 +995,7 @@ $progress-bg:                       $gray-200;
 $progress-border-radius:            $border-radius;
 $progress-box-shadow:               inset 0 .1rem .1rem rgba($black, .1);
 $progress-bar-color:                $white;
-$progress-bar-bg:                   theme-color("primary");
+$progress-bar-bg:                   theme-color("success");
 $progress-bar-animation-timing:     1s linear infinite;
 $progress-bar-transition:           width .6s ease;
 
@@ -1162,8 +1162,8 @@ $menu-item-active-color-dark: #ffffff;
 
 //Menu item colors
 $menu-item:              $gray-700; //#6e768e;
-$menu-item-hover:        $primary;
-$menu-item-active:       $primary;
+$menu-item-hover:        $success;
+$menu-item-active:       $success;
 $menu-item-bg-hover:    #f7f7ff;
 
 //Rightbar Width

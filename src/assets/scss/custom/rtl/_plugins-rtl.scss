@@ -102,13 +102,13 @@
                 &.active{
                     >a:after{
                         border-left-color: transparent!important;
-                        border-right-color: $primary!important;
+                        border-right-color: $success!important;
                     }
                 }
                 &.done{
                     >a:after{
                         border-left-color: transparent!important;
-                        border-right-color: lighten($primary, 24%)!important;
+                        border-right-color: lighten($success, 24%)!important;
                     }
                 }
             }

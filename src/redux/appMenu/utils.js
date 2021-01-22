@@ -18,7 +18,7 @@ const assignIdAndParent = (menuItems, parentId) => {
         }
     });
 };
-
+// eslint-disable-next-line
 export default (menuItems) => {
     assignIdAndParent(menuItems);
     return menuItems;

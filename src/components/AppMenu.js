@@ -23,11 +23,9 @@ const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activat
                 <span className="menu-arrow"></span>
             </Link>
 
-            <ul
-                className={classNames(subMenuClassNames, 'mm-collapse', {
+            <ul className={classNames(subMenuClassNames, 'mm-collapse', {
                     'mm-collapsed mm-show': activatedMenuItemIds.indexOf(item.id) >= 0,
-                })}
-                aria-expanded={activatedMenuItemIds.indexOf(item.id) >= 0}>
+                })} >
                 {item.children.map((child, i) => {
                     return (
                         <React.Fragment key={i}>

@@ -44,33 +44,40 @@ class Login extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
+        window.location.reload(false);
         document.body.classList.remove('authentication-bg');
     }
+
+    
 
     /**
      * Handles the submit
      */
     handleValidSubmit = (event, values) => {
-				this.props.loginUser(values.username, values.password);
+        this.props.loginUser(values.username, values.password);
     };
 
     SuperAdminHandler = () => {
-				localStorage.setItem('usertype', 'superadmin');
-				this.props.loginUser(this.state.username, this.state.password,'sAdmin');
+			  localStorage.removeItem('usertype');
+        localStorage.setItem('usertype', 'superadmin');
+        this.props.loginUser(this.state.username, this.state.password,'sAdmin');      
     };
 
-    BranchAdminHandler =( ) => {
-			  localStorage.setItem('usertype', 'branchadmin');
-				this.props.loginUser(this.state.username, this.state.password,'bAdmin');
+    BranchAdminHandler = () => {
+			console.log(this.state)
+        localStorage.removeItem('usertype');
+        localStorage.setItem('usertype', 'branchadmin');
+        this.props.loginUser(this.state.username, this.state.password,'bAdmin');
     };
 
 		handleChange=(e)=>{
       this.setState({[e.target.name]: e.target.value});	
 		}
-
     BranchCoachHandler = () => {
-        localStorage.setItem('usertype', 'branchcoach');
-				this.props.loginUser(this.state.username, this.state.password,'coach');
+        localStorage.removeItem('usertype');
+        localStorage.setItem('usertype', 'coach');
+        this.props.loginUser(this.state.username, this.state.password,'coach');
+        
     };
 
     /**
@@ -79,7 +86,14 @@ class Login extends Component {
     renderRedirectToRoot = () => {
         const isAuthTokenValid = isUserAuthenticated();
         if (isAuthTokenValid) {
-            return <Redirect to="/" />;
+            let usertype = localStorage.getItem("usertype");
+            if(usertype==="superadmin")
+            {return <Redirect to="/dashboard" />;}
+            else if(usertype==="branchadmin")
+            {return <Redirect to="/branchadmin/dashboard" />;}
+             else if(usertype==="coach")
+            {return <Redirect to="/branchcoach/client" />;}
+            
         }
     };
 
@@ -105,7 +119,7 @@ class Login extends Component {
                                                         <a href="/">
                                                             <img src={logo} alt="" height="24" />
                                                             <h3 className="d-inline align-middle ml-1 text-logo">
-                                                                Shreyu
+                                                                Restoration
                                                             </h3>
                                                         </a>
                                                     </div>
@@ -117,7 +131,6 @@ class Login extends Component {
 
                                                     {this.props.error && (
                                                         <Alert color="danger" isOpen={this.props.error ? true : false}>
-																													{console.log(this.props)}
                                                             <div>{this.props.error}</div>
                                                         </Alert>
                                                     )}
@@ -138,8 +151,7 @@ class Login extends Component {
                                                                     name="username"
                                                                     id="username"
                                                                     placeholder="hello@coderthemes.com"
-																																		value={this.state.username}
-																																		onChange={this.handleChange}
+                                                                    value={this.state.username} onChange={this.handleChange}
                                                                     required
                                                                 />
                                                             </InputGroup>
@@ -165,8 +177,7 @@ class Login extends Component {
                                                                     name="password"
                                                                     id="password"
                                                                     placeholder="Enter your password"
-																																		value={this.state.password}
-																																		onChange={this.handleChange}
+                                                                    value={this.state.password} onChange={this.handleChange}
                                                                     required
                                                                 />
                                                             </InputGroup>
@@ -174,23 +185,32 @@ class Login extends Component {
                                                         </AvGroup>
 
                                                         <FormGroup className="form-group mb-0 text-center">
+                                                            
                                                             <Button
-                                                                color="primary"
+                                                                color="success"
                                                                 className="btn-block"
-                                                                onClick={this.SuperAdminHandler}>
-                                                                Log In as Super Admin
+                                                                onClick={this.SuperAdminHandler}
+                                                                >
+                                                                    {/* <Link to='/dashboard'> */}
+                                                                    Log In as Master Admin
+                                                                    {/* </Link> */}
+                                                                
                                                             </Button>
+                                                            
                                                             <Button
-                                                                color="primary"
+                                                                color="success"
                                                                 className="btn-block"
-                                                                onClick={this.BranchAdminHandler}>
+                                                                onClick={this.BranchAdminHandler}
+                                                                >
+                                                                    {/* <Link to='/branchadmin/dashboard'> */}
                                                                 Log In as Branch Admin
+                                                                {/* </Link> */}
                                                             </Button>
                                                             <Button
-                                                                color="primary"
+                                                                color="success"
                                                                 className="btn-block"
                                                                 onClick={this.BranchCoachHandler}>
-                                                                Log In as Branch Coach
+                                                                Log In as Coach
                                                             </Button>
                                                         </FormGroup>
 
@@ -206,12 +226,12 @@ class Login extends Component {
                                                         <div className="overlay"></div>
                                                         <div className="auth-user-testimonial">
                                                             <p className="font-size-24 font-weight-bold text-white mb-1">
-                                                                I simply love it!
+                                                                Welcome to Restoration !!
                                                             </p>
                                                             <p className="lead">
-                                                                "It's a elegent templete. I love it very much!"
+                                                                "We care about your health"
                                                             </p>
-                                                            <p>- Admin User</p>
+                                                            <p></p>
                                                         </div>
                                                     </div>
                                                 </Col>
@@ -225,7 +245,7 @@ class Login extends Component {
                                 <Col className="col-12 text-center">
                                     <p className="text-muted">
                                         Don't have an account?{' '}
-                                        <Link to="/account/register" className="text-primary font-weight-bold ml-1">
+                                        <Link to="/account/register" className="text-success font-weight-bold ml-1">
                                             Sign Up
                                         </Link>
                                     </p>

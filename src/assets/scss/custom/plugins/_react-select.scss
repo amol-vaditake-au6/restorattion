@@ -18,8 +18,8 @@
 }
 
 .rbt-token {
-    background-color: rgba($primary,0.2) !important;
-    color: $primary !important;
+    background-color: rgba($success,0.2) !important;
+    color: $success !important;
 }
 
 .rbt-input-multi.focus {
@@ -71,17 +71,17 @@
 }
 
 .react-select__multi-value {
-    background-color: rgba($primary,0.2) !important;
-    color: $primary !important;
+    background-color: rgba($success,0.2) !important;
+    color: $success !important;
 
     .react-select__multi-value__label {
-        color: $primary;
+        color: $success;
     }
 
     .react-select__multi-value__remove {
         &:hover {
-            background-color: rgba($primary,0.2) !important;
-            color: $primary !important;
+            background-color: rgba($success,0.2) !important;
+            color: $success !important;
         }
     }
 }

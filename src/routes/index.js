@@ -13,6 +13,8 @@ const ForgetPassword = React.lazy(() => import('../pages/auth/ForgetPassword'));
 const Confirm = React.lazy(() => import('../pages/auth/Confirm'));
 // dashboard
 const Dashboard = React.lazy(() => import('../pages/dashboard'));
+const AdminDashboard = React.lazy(() => import('../pages/dashboard'));
+const CoachDashboard = React.lazy(() => import('../pages/dashboard'));
 
 
 // super admin
@@ -23,10 +25,10 @@ const AllClients = React.lazy(() => import('../pages/SuperAdmin/ClientList/AllCl
 const AdminClients = React.lazy(() => import('../pages/BranchAdmin/myClients'));
 const AllBranches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/AllBranches'));
 const AllCoaches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/AllCoaches'));
-
+const AllAdmins = React.lazy(() => import('../pages/SuperAdmin/AllAdmins'));
+const AllMyBranches = React.lazy(() => import('../pages/BranchAdmin/MyBranches.js'));
 // handle auth and authorization
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
-	console.log(roles, rest)
 	return (<Route
         {...rest}
         render={(props) => {
@@ -66,8 +68,33 @@ const dashboardRoutes = {
     route: PrivateRoute,
 };
 
-// super admin
+const adminDashboardRoutes = {
+    path: 'admin/dashboard',
+    name: 'Dashboard',
+    icon: FeatherIcon.Home,
+    header: 'Navigation',
+    badge: {
+        variant: 'success',
+        text: '1',
+    },
+    component: AdminDashboard,
 
+    route: PrivateRoute,
+};
+
+const coachDashboardRoutes = {
+    path: 'coach/dashboard',
+    name: 'Dashboard',
+    icon: FeatherIcon.Home,
+    header: 'Navigation',
+    badge: {
+        variant: 'success',
+        text: '1',
+    },
+    component: CoachDashboard,
+
+    route: PrivateRoute,
+};
 
 const superAdminRoutesNew = {
     path: '/superadmin/',
@@ -99,6 +126,12 @@ const superAdminRoutesNew = {
             path: '/superadmin/branch/allcoaches',
             name: 'All Coaches',
             component: AllCoaches,
+            route: PrivateRoute,        
+				},
+				{
+            path: '/superadmin/branch/allAdmins',
+            name: 'All Admins',
+            component: AllAdmins,
             route: PrivateRoute,
         
         },
@@ -107,7 +140,7 @@ const superAdminRoutesNew = {
 
 
 const branchAdminRoutesNew = {
-    path: '/superadmin/',
+    path: '/admin/',
     name: 'Branch Admin ',
     icon: FeatherIcon.Inbox,
     children: [
@@ -117,13 +150,18 @@ const branchAdminRoutesNew = {
             component: AdminClients,
             route: PrivateRoute,
         
+				},
+				{
+            path: '/admin/branches',
+            name: 'All My Branches',
+            component: AllMyBranches,
+            route: PrivateRoute,        
         },
 				{
-            path: '/superadmin/branch/allcoaches',
+            path: '/admin/allcoaches',
             name: 'All Coaches',
             component: AllCoaches,
-            route: PrivateRoute,
-        
+            route: PrivateRoute,        
         },
     ],
 };
@@ -140,55 +178,55 @@ const branchAdminRoutesNew = {
 
 // branch coach
 const BranchCoachClientRoutes = {
-    path: '/branchcoach/client',
+    path: '/coach/client',
     name: 'Client',
     icon: FeatherIcon.Inbox,
     header: 'Branch Coach',
     children: [
         {
-            path: '/branchcoach/client/checklist',
+            path: '/coach/client/checklist',
             name: 'Daily Checklist',
             component: BranchAdmin,
             route: PrivateRoute,
         
         },
         {
-            path: '/branchcoach/client/menu',
+            path: '/coach/client/menu',
             name: 'Daily Menu',
             component: BranchAdmin,
             route: PrivateRoute,
         
         },
         {
-            path: '/branchcoach/client/repost',
+            path: '/coach/client/repost',
             name: 'Medical Repost',
             component: BranchAdmin,
             route: PrivateRoute,
         
         },
         {
-            path: '/branchcoach/client/prescription',
+            path: '/coach/client/prescription',
             name: 'Prescription',
             component: BranchAdmin,
             route: PrivateRoute,
         
         },
         {
-            path: '/branchcoach/client/profile',
+            path: '/coach/client/profile',
             name: 'Profile',
             component: BranchAdmin,
             route: PrivateRoute,
         
         },
         {
-            path: '/branchcoach/client/feedback',
+            path: '/coach/client/feedback',
             name: 'Feedback',
             component: BranchAdmin,
             route: PrivateRoute,
         
         },
         {
-            path: '/branchcoach/client/health',
+            path: '/coach/client/health',
             name: 'Health Progress',
             component: BranchAdmin,
             route: PrivateRoute,
@@ -260,7 +298,7 @@ const branchadmin = [rootRoute, dashboardRoutes, branchAdminRoutesNew,authRoutes
 
 const branchadminAuthRoutes = [rootRoute,dashboardRoutes, branchAdminRoutesNew];
 
-const branchcoach = [rootRoute, dashboardRoutes, BranchCoachClientRoutes, authRoutes];
+const coach = [rootRoute, dashboardRoutes, BranchCoachClientRoutes, authRoutes];
 
 const branchcoachAuthRoutes = [dashboardRoutes, BranchCoachClientRoutes];
 
@@ -276,8 +314,8 @@ if(usertype==='superadmin'){
 } else if (usertype === 'branchadmin') {
   allRoutes = branchadmin;
   authProtectedRoutes = branchadminAuthRoutes;
-} else if (usertype === 'branchcoach') {
-	allRoutes = branchcoach;
+} else if (usertype === 'coach') {
+	allRoutes = coach;
   authProtectedRoutes = branchcoachAuthRoutes;
 }else{
 	allRoutes=[rootRoute,authRoutes,dashboardRoutes]

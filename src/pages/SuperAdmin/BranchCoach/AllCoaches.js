@@ -230,7 +230,8 @@ const AllCoaches = () => {
                                             </Col>
                                         </Row>
 
-                                        <BootstrapTable
+                                        {records.length ?
+																				<BootstrapTable
                                             {...props.baseProps}
                                             bordered={false}
                                             defaultSorted={defaultSorted}
@@ -245,7 +246,7 @@ const AllCoaches = () => {
                                                 ],
                                             })}
                                             wrapperClasses="table-responsive"
-                                        />
+                                        />:<h3 style={{textAlign:'center'}}>No Coaches Found</h3>}
                                     </React.Fragment>
                                 )}
                             </ToolkitProvider>
@@ -255,9 +256,10 @@ const AllCoaches = () => {
             </Row>
 					<Row>
 						<Col className="text-right">
-                <button className="btn btn-primary" onClick={handleShow}>
+                {localStorage.getItem('usertype')==='superadmin'&&
+								<button className="btn btn-primary" onClick={handleShow}>
                   Add New Coach
-                </button>
+                </button>}
             </Col>
 						<Modal show={show} onHide={handleClose}>
 							<Modal.Header closeButton>
