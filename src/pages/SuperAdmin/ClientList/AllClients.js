@@ -257,7 +257,8 @@ const AllClients = () => {
 
     const submitBranch = async() => {
 			await Axios.post(`http://localhost:8000/api/sAdmin/allocateBranch/${userId}/${branchId}/${branchName}`)
-			setShow(false)       
+			setShow(false)   
+			window.location.reload(false)    
 		};
 
     const handleCloseCommon = async() => {

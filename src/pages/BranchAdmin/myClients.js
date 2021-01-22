@@ -177,7 +177,8 @@ const AllClients = () => {
 
 		const submitCoach = async() => {
 			await Axios.post(`http://localhost:8000/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
-			setShowCoach(false)       
+			setShowCoach(false)  
+			window.location.reload()     
 		};
 		const handleShowCoach = () => setShowCoach(true);
     return (

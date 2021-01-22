@@ -27,6 +27,10 @@ const AllBranches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/All
 const AllCoaches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/AllCoaches'));
 const AllAdmins = React.lazy(() => import('../pages/SuperAdmin/AllAdmins'));
 const AllMyBranches = React.lazy(() => import('../pages/BranchAdmin/MyBranches.js'));
+
+const  BranchCoachAllClients = React.lazy(()=>import('../pages/BranchCoach/BranchCoachAllClients'));
+
+const ClientDetails = React.lazy(() => import('../pages/coach/clientDetails'));
 // handle auth and authorization
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 	return (<Route
@@ -177,65 +181,24 @@ const branchAdminRoutesNew = {
 
 
 // branch coach
+
 const BranchCoachClientRoutes = {
-    path: '/coach/client',
+    path: '/branchcoach/client',
     name: 'Client',
     icon: FeatherIcon.Inbox,
-    header: 'Branch Coach',
-    children: [
-        {
-            path: '/coach/client/checklist',
-            name: 'Daily Checklist',
-            component: BranchAdmin,
-            route: PrivateRoute,
-        
-        },
-        {
-            path: '/coach/client/menu',
-            name: 'Daily Menu',
-            component: BranchAdmin,
-            route: PrivateRoute,
-        
-        },
-        {
-            path: '/coach/client/repost',
-            name: 'Medical Repost',
-            component: BranchAdmin,
-            route: PrivateRoute,
-        
-        },
-        {
-            path: '/coach/client/prescription',
-            name: 'Prescription',
-            component: BranchAdmin,
-            route: PrivateRoute,
-        
-        },
-        {
-            path: '/coach/client/profile',
-            name: 'Profile',
-            component: BranchAdmin,
-            route: PrivateRoute,
-        
-        },
-        {
-            path: '/coach/client/feedback',
-            name: 'Feedback',
-            component: BranchAdmin,
-            route: PrivateRoute,
-        
-        },
-        {
-            path: '/coach/client/health',
-            name: 'Health Progress',
-            component: BranchAdmin,
-            route: PrivateRoute,
-        
-        },
-    ],
+    header: 'Coach',
+    component: BranchCoachAllClients,
+    route: PrivateRoute,
+    roles: ['Admin'],
 };
 
-
+const BranchCoachClientDetailsRoutes = {
+    path: '/branchcoach/clientdetails',
+    name: '',
+    component: ClientDetails,
+    route: PrivateRoute,
+    roles: ['Admin'],
+};
 
 // auth
 const authRoutes = {
@@ -298,7 +261,7 @@ const branchadmin = [rootRoute, dashboardRoutes, branchAdminRoutesNew,authRoutes
 
 const branchadminAuthRoutes = [rootRoute,dashboardRoutes, branchAdminRoutesNew];
 
-const coach = [rootRoute, dashboardRoutes, BranchCoachClientRoutes, authRoutes];
+const coach = [BranchCoachClientDetailsRoutes,rootRoute, dashboardRoutes, BranchCoachClientRoutes, authRoutes];
 
 const branchcoachAuthRoutes = [dashboardRoutes, BranchCoachClientRoutes];
 
