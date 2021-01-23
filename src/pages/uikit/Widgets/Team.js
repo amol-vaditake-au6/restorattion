@@ -106,7 +106,7 @@ const Events = () => {
                             <h6 className="mt-1 font-size-16">Shreyu React Planning</h6>
                         </li>
                         <li>
-                            <a href="/" className="btn btn-primary btn-block w-75 mb-0"><i className="uil uil-focus-add mr-2"></i>Add Event</a>
+                            <a href="/" className="btn btn-success btn-block w-75 mb-0"><i className="uil uil-focus-add mr-2"></i>Add Event</a>
                         </li>
                     </ul>
                 </Col>

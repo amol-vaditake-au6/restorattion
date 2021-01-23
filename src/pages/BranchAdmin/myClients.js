@@ -209,7 +209,7 @@ const AllClients = () => {
                                                 <SearchBar {...props.searchProps} />
                                             </Col>
                                             <Col className="text-right">
-                                                <ExportCSVButton {...props.csvProps} className="btn btn-primary">
+                                                <ExportCSVButton {...props.csvProps} className="btn btn-success">
                                                     Export CSV
                                                 </ExportCSVButton>
                                             </Col>

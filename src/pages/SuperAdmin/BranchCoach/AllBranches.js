@@ -317,7 +317,7 @@ const AllBranches = () => {
                                                 <SearchBar {...props.searchProps} />
                                             </Col>
                                             <Col className="text-right">
-                                              <ExportCSVButton {...props.csvProps} className="btn btn-primary">
+                                              <ExportCSVButton {...props.csvProps} className="btn btn-success">
                                                     Export CSV
                                               </ExportCSVButton>
                                             </Col>
@@ -348,7 +348,7 @@ const AllBranches = () => {
             </Row>
 						<Row>
 						<Col className="text-right">
-                <button className="btn btn-primary" onClick={handleShow}>
+                <button className="btn btn-success" onClick={handleShow}>
                   Add New Branch
                 </button>
             </Col>

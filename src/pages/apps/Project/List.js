@@ -219,14 +219,14 @@ const Projects = () => {
                     <div className="mt-4 mt-md-0">
                         <button type="button" className="btn btn-danger mr-4 mb-3  mb-sm-0"><i className="uil-plus mr-1"></i> Create Project</button>
                         <div className="btn-group mb-3 mb-sm-0">
-                            <button type="button" className="btn btn-primary">All</button>
+                            <button type="button" className="btn btn-success">All</button>
                         </div>
                         <div className="btn-group ml-1">
                             <button type="button" className="btn btn-white">Ongoing</button>
                             <button type="button" className="btn btn-white">Finished</button>
                         </div>
                         <div className="btn-group ml-2 d-none d-sm-inline-block">
-                            <button type="button" className="btn btn-primary btn-sm"><i
+                            <button type="button" className="btn btn-success btn-sm"><i
                                 className="uil uil-apps"></i></button>
                         </div>
                         <div className="btn-group d-none d-sm-inline-block ml-1">

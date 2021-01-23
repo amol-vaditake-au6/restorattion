@@ -23,7 +23,7 @@ const Profiles = () => {
                             <h5 className="mt-2 mb-0">Shreyu N</h5>
                             <h6 className="text-muted font-weight-normal mt-2 mb-4">User Experience Specialist</h6>
 
-                            <button type="button" className="btn btn-primary btn-sm mr-1">Follow</button>
+                            <button type="button" className="btn btn-success btn-sm mr-1">Follow</button>
                             <button type="button" className="btn btn-white btn-sm">Message</button>
 
                             <div className="mt-4 pt-3 border-top text-left">
@@ -64,7 +64,7 @@ const Profiles = () => {
                             <h6 className="text-muted font-weight-normal mt-2 mb-4">User Experience
                                 Specialist
                                         </h6>
-                            <button type="button" className="btn btn-primary btn-sm mr-1">Follow</button>
+                            <button type="button" className="btn btn-success btn-sm mr-1">Follow</button>
                             <button type="button" className="btn btn-white btn-sm">Message</button>
                         </div>
                     </CardBody>
@@ -130,7 +130,7 @@ const Profiles = () => {
 
                         <div className="row mt-5 text-center">
                             <div className="col">
-                                <button type="button" className="btn btn-primary btn-block mr-1">Follow</button>
+                                <button type="button" className="btn btn-success btn-block mr-1">Follow</button>
                             </div>
                             <div className="col">
                                 <button type="button" className="btn btn-white btn-block">Message</button>
@@ -153,7 +153,7 @@ const Profiles = () => {
                                 <div className="card-text row text-center">
                                     <div className="col">
                                         <button type="button"
-                                            className="btn btn-primary btn-sm btn-block mr-1">Follow</button>
+                                            className="btn btn-success btn-sm btn-block mr-1">Follow</button>
                                     </div>
                                     <div className="col">
                                         <button type="button"
@@ -211,7 +211,7 @@ const Profiles = () => {
                         <Row className="mt-3 text-center">
                             <Col>
                                 <button type="button"
-                                    className="btn btn-primary btn-sm btn-block mr-1">Follow</button>
+                                    className="btn btn-success btn-sm btn-block mr-1">Follow</button>
                             </Col>
                             <Col>
                                 <button type="button"

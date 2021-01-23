@@ -20,7 +20,7 @@ const UserBox = () => {
                                 <span className="font-size-12 font-weight-bold">Your Profile is <span className="font-size-11">60%</span> completed</span>
                             </Progress>
 
-                            <button type="button" className="btn btn-primary btn-sm mr-1">Follow</button>
+                            <button type="button" className="btn btn-success btn-sm mr-1">Follow</button>
                             <button type="button" className="btn btn-white btn-sm">Message</button>
                         </div>
 

@@ -21,7 +21,7 @@ const Event1 = () => (
                 <CardBody>
                     <h5 className="mt-0">Event One</h5>
                     <p className="text-muted">It will be as simple as occidental in fact it will be Occidental Cambridge friend</p>
-                    <div><a href="/" className="btn btn-primary btn-sm">Read more</a></div>
+                    <div><a href="/" className="btn btn-success btn-sm">Read more</a></div>
                 </CardBody>
             </Card>
         </Media>
@@ -144,7 +144,7 @@ const Activity = () => {
                         <article className="timeline-item">
                             <h2 className="m-0 d-none">&nbsp;</h2>
                             <div className="time-show mt-0">
-                                <a href="/" className="btn btn-primary width-lg">Today</a>
+                                <a href="/" className="btn btn-success width-lg">Today</a>
                             </div>
                         </article>
 
@@ -168,7 +168,7 @@ const Activity = () => {
                                                 <p className="text-muted">At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce li del resultant.</p>
                                                 <p className="text-muted">It will be as simple as in fact, it will be Occidental.</p>
                                                 <div>
-                                                    <a href="/" className="btn btn-primary btn-sm">Read more</a>
+                                                    <a href="/" className="btn btn-success btn-sm">Read more</a>
                                                 </div>
                                             </div>
                                         </div>

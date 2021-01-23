@@ -324,7 +324,7 @@ const AllClients = () => {
                                                 <SearchBar {...props.searchProps} />
                                             </Col>
                                             <Col className="text-right">
-                                                <ExportCSVButton {...props.csvProps} className="btn btn-primary">
+                                                <ExportCSVButton {...props.csvProps} className="btn btn-success">
                                                     Export CSV
                                                 </ExportCSVButton>
                                             </Col>
@@ -356,7 +356,7 @@ const AllClients = () => {
                 </Col>
             </Row>
 						<Col className="text-right">
-                <button className="btn btn-primary" onClick={handleShowClients}>
+                <button className="btn btn-success" onClick={handleShowClients}>
                   Add New Client
                 </button>
             </Col>

@@ -220,7 +220,7 @@ const AllCoaches = () => {
                                                 <SearchBar {...props.searchProps} />
                                             </Col>
                                             <Col className="text-right">
-                                                <ExportCSVButton {...props.csvProps} className="btn btn-primary">
+                                                <ExportCSVButton {...props.csvProps} className="btn btn-success">
                                                     Export CSV
                                                 </ExportCSVButton>
                                             </Col>
@@ -253,7 +253,7 @@ const AllCoaches = () => {
 					<Row>
 						<Col className="text-right">
                 {localStorage.getItem('usertype')==='superadmin'&&
-								<button className="btn btn-primary" onClick={handleShow}>
+								<button className="btn btn-success" onClick={handleShow}>
                   Add New Coach
                 </button>}
             </Col>

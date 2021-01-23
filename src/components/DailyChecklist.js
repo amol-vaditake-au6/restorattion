@@ -81,8 +81,8 @@ const DailyCheckList = function({buttonNumber}) {
 															<li className="d-flex justify-content-between">
                                 <h6 style={{width:'100px'}}>{p?.name}</h6>
                                 <h6 style={{width:'100px'}}>{p?.quantity} Ser</h6>
-																<button onClick={()=>{hanldeEdit(p)}}>Edit </button>
-																<button onClick={()=>{hanldeDelete(p)}}>Delete </button>
+																<button className="btn btn-success" onClick={()=>{hanldeEdit(p)}} clan>Edit </button>
+																<button className="btn btn-success" onClick={()=>{hanldeDelete(p)}}>Delete </button>
                             </li>
                             <hr />
 														</>)
@@ -92,7 +92,7 @@ const DailyCheckList = function({buttonNumber}) {
                 </div>:<h4>No Data Found for day {buttonNumber}</h4>}               
         </div>
 				<Col className="text-center" style={{marginTop:'10px'}}>
-						<button className="btn btn-primary" onClick={handleShowAdmin} >
+						<button className="btn btn-success" onClick={handleShowAdmin} >
 							Add New
 						</button>
 				</Col>
