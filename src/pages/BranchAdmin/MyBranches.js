@@ -41,7 +41,7 @@ const AllBranches = () => {
 		useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "http://localhost:8000/api/sAdmin/branches"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/branches"
 				);
 				let myResults = result?.data?.filter(b=>b.adminId===localStorage.getItem('id'))
 				if(myResults)setRecords(myResults);
@@ -141,11 +141,7 @@ const AllBranches = () => {
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
-                        breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/branchcoach/allbranches' },
-                            { label: 'ClientList', path: '/superadmin/branchcoach/allbranches' },
-                            { label: 'AllClients', path: '/superadmin/branchcoach/allbranches', active: true },
-                        ]}
+                        breadCrumbItems={[]}
                         title={'All Branches'}
                     />
                 </Col>

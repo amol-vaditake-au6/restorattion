@@ -30,10 +30,7 @@ class Login extends Component {
         super(props);
 
         this.handleValidSubmit = this.handleValidSubmit.bind(this);
-        this.state = {
-            username: 'test',
-            password: 'test',
-        };
+        this.state = {username: '',password: ''};
     }
 
     componentDidMount() {
@@ -64,7 +61,6 @@ class Login extends Component {
     };
 
     BranchAdminHandler = () => {
-			console.log(this.state)
         localStorage.removeItem('usertype');
         localStorage.setItem('usertype', 'branchadmin');
         this.props.loginUser(this.state.username, this.state.password,'bAdmin');
@@ -161,11 +157,7 @@ class Login extends Component {
 
                                                         <AvGroup className="mb-3">
                                                             <Label for="password">Password</Label>
-                                                            <Link
-                                                                to="/account/forget-password"
-                                                                className="float-right text-muted text-unline-dashed ml-1">
-                                                                Forgot your password?
-                                                            </Link>
+                                                            
                                                             <InputGroup>
                                                                 <InputGroupAddon addonType="prepend">
                                                                     <span className="input-group-text">
@@ -213,11 +205,6 @@ class Login extends Component {
                                                                 Log In as Coach
                                                             </Button>
                                                         </FormGroup>
-
-                                                        <p className="mt-3">
-                                                            <strong>Username:</strong> test &nbsp;&nbsp;{' '}
-                                                            <strong>Password:</strong> test
-                                                        </p>
                                                     </AvForm>
                                                 </Col>
 
@@ -245,7 +232,7 @@ class Login extends Component {
                                 <Col className="col-12 text-center">
                                     <p className="text-muted">
                                         Don't have an account?{' '}
-                                        <Link to="/account/register" className="text-success font-weight-bold ml-1">
+                                        <Link to="/account/login" className="text-success font-weight-bold ml-1">
                                             Sign Up
                                         </Link>
                                     </p>

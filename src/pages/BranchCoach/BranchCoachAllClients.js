@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Modal } from 'react-bootstrap';
 
 
 import {
@@ -144,7 +143,7 @@ const BranchCoachAllClients = () => {
     const { ExportCSVButton } = CSVExport;
     useEffect(() => {
         (async () => {
-						const result = await axios.get(`http://localhost:8000/api/coach/myClients/${localStorage.getItem('id')}`);
+						const result = await axios.get(`https://dry-falls-55056.herokuapp.com/api/coach/myClients/${localStorage.getItem('id')}`);
             if (result.data) setRecords(result.data);
         })();
     }, []);
@@ -155,11 +154,7 @@ const BranchCoachAllClients = () => {
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
-                        breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/clientlist/allclients' },
-                            { label: 'ClientList', path: '/superadmin/clientlist/allclients' },
-                            { label: 'AllClients', path: '/superadmin/clientlist/allclients', active: true },
-                        ]}
+                        breadCrumbItems={[]}
                         title={'All Clients'}
                     />
                 </Col>
@@ -188,7 +183,7 @@ const BranchCoachAllClients = () => {
                                             </Col>
                                         </Row>
 
-                                        <BootstrapTable
+                                        {records.length ?<BootstrapTable
                                             {...props.baseProps}
                                             bordered={false}
                                             defaultSorted={defaultSorted}
@@ -203,7 +198,7 @@ const BranchCoachAllClients = () => {
                                                 ],
                                             })}
                                             wrapperClasses="table-responsive"
-                                        />
+                                        />:<h3 style={{textAlign:'center'}}>No Clients Found</h3>}
                                     </React.Fragment>
                                 )}
                             </ToolkitProvider>

@@ -6,14 +6,15 @@ import './ClientMenu/clientMenu.scss';
 
 const DailyCheckList = function({buttonNumber}) {
 	const [records,setRecords]=useState([])
+	const [fetch,setFetch]=useState(false)
 		useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            `http://localhost:8000/api/coach/getChecklist/${buttonNumber}/${localStorage.getItem('currUserId')}`
+            `https://dry-falls-55056.herokuapp.com/api/coach/getChecklist/${buttonNumber}/${localStorage.getItem('currUserId')}`
 				);
 				if(result)setRecords(result?.data);
     })();
-		}, [buttonNumber]);	
+		}, [buttonNumber,fetch]);	
 
 		let [showAddList,setShowAddList]=useState(false)
 		const [formData, setFormData] = useState({});
@@ -35,14 +36,14 @@ const DailyCheckList = function({buttonNumber}) {
 					alert('Fill All the Fileds')
 					return
 			} 
-			let res = await Axios.post(`http://localhost:8000/api/coach/addChecklist/${buttonNumber}/${localStorage.getItem('currUserId')}`,{...formData})
+			let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/coach/addChecklist/${buttonNumber}/${localStorage.getItem('currUserId')}`,{...formData})
 			if(res.data.massage==='done'){
 				if(formData._id){
 					alert('Checklist Updated')	
 				} else {
 				alert('Checklist Added successfully')		
 				}
-				window.location.reload()
+				setFetch(!fetch)
 				setShowAddList(false) 
 				return
 			} else {
@@ -57,10 +58,10 @@ const DailyCheckList = function({buttonNumber}) {
 	}
 	
 	let hanldeDelete=async(p)=>{
-		let res = await Axios.post(`http://localhost:8000/api/coach/deleteChecklist/${localStorage.getItem('currUserId')}/${p._id}`)
+		let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/coach/deleteChecklist/${localStorage.getItem('currUserId')}/${p._id}`)
 			if(res.data.massage==='done'){
 				alert('Checklist Deleted')	
-				window.location.reload()
+				setFetch(!fetch)
 				return
 			} else {
 				alert('Validation error')
@@ -70,25 +71,25 @@ const DailyCheckList = function({buttonNumber}) {
 	return (
     <div className = "text-center">
         <div className="day-item m-auto">
-                <div class="card text-center check-food-list">
+                {records.length	? 
+									<div class="card text-center check-food-list">
+										<h4>Daily Checklist For Day {buttonNumber}</h4>
                     <div class="card-body">
-												{records.length
-												?<ul>
+												<ul>
                             {records.map(p=>{
 															return (<>
 															<li className="d-flex justify-content-between">
                                 <h6 style={{width:'100px'}}>{p?.name}</h6>
-                                <h6 style={{width:'100px'}}>{p?.quantity}</h6>
+                                <h6 style={{width:'100px'}}>{p?.quantity} Ser</h6>
 																<button onClick={()=>{hanldeEdit(p)}}>Edit </button>
 																<button onClick={()=>{hanldeDelete(p)}}>Delete </button>
                             </li>
                             <hr />
 														</>)
 														})}
-												</ul>
-												:<h4>No Data Found for day {buttonNumber}</h4>}
+												</ul>												
                     </div>
-                </div>               
+                </div>:<h4>No Data Found for day {buttonNumber}</h4>}               
         </div>
 				<Col className="text-center" style={{marginTop:'10px'}}>
 						<button className="btn btn-primary" onClick={handleShowAdmin} >

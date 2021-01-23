@@ -29,7 +29,6 @@ const setSession = user => {
  * @param {*} payload - username and password
  */
 function* login({ payload: { username, password , type } }) {
-	  console.log(type)
     const options = {
         body: JSON.stringify({ userName:username, password }),
         method: 'POST',
@@ -37,7 +36,7 @@ function* login({ payload: { username, password , type } }) {
     };
 
     try {
-				const response = yield call(fetchJSON, `http://localhost:8000/api/${type}/login`, options);
+				const response = yield call(fetchJSON, `https://dry-falls-55056.herokuapp.com/api/${type}/login`, options);
 				if(response.massage === 'done'){
 					let {token , id ,role } = response
 					let responseJson= { token , id, role }

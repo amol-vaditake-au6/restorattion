@@ -13,13 +13,9 @@ const ForgetPassword = React.lazy(() => import('../pages/auth/ForgetPassword'));
 const Confirm = React.lazy(() => import('../pages/auth/Confirm'));
 // dashboard
 const Dashboard = React.lazy(() => import('../pages/dashboard'));
-const AdminDashboard = React.lazy(() => import('../pages/dashboard'));
-const CoachDashboard = React.lazy(() => import('../pages/dashboard'));
-
 
 // super admin
 
-const BranchAdmin = React.lazy(() => import('../pages/SuperAdmin/BranchAdmin'));
 const NewOnlineClients = React.lazy(() => import('../pages/SuperAdmin/ClientList/NewOnlineClients'));
 const AllClients = React.lazy(() => import('../pages/SuperAdmin/ClientList/AllClients'));
 const AdminClients = React.lazy(() => import('../pages/BranchAdmin/myClients'));
@@ -68,34 +64,6 @@ const dashboardRoutes = {
         text: '1',
     },
     component: Dashboard,
-
-    route: PrivateRoute,
-};
-
-const adminDashboardRoutes = {
-    path: 'admin/dashboard',
-    name: 'Dashboard',
-    icon: FeatherIcon.Home,
-    header: 'Navigation',
-    badge: {
-        variant: 'success',
-        text: '1',
-    },
-    component: AdminDashboard,
-
-    route: PrivateRoute,
-};
-
-const coachDashboardRoutes = {
-    path: 'coach/dashboard',
-    name: 'Dashboard',
-    icon: FeatherIcon.Home,
-    header: 'Navigation',
-    badge: {
-        variant: 'success',
-        text: '1',
-    },
-    component: CoachDashboard,
 
     route: PrivateRoute,
 };

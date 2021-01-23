@@ -141,10 +141,10 @@ const AllClients = () => {
     useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            `http://localhost:8000/api/bAdmin/myClients/${localStorage.getItem('id')}`
+            `https://dry-falls-55056.herokuapp.com/api/bAdmin/myClients/${localStorage.getItem('id')}`
 				);
 				const coaches = await Axios.get(
-            "http://localhost:8000/api/sAdmin/coaches"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/coaches"
 				);
 
 				if(result)setRecords(result.data);
@@ -176,7 +176,7 @@ const AllClients = () => {
 		};
 
 		const submitCoach = async() => {
-			await Axios.post(`http://localhost:8000/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
+			await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
 			setShowCoach(false)  
 			window.location.reload()     
 		};
@@ -186,11 +186,7 @@ const AllClients = () => {
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
-                        breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/clientlist/allclients' },
-                            { label: 'ClientList', path: '/superadmin/clientlist/allclients' },
-                            { label: 'AllClients', path: '/superadmin/clientlist/allclients', active: true },
-                        ]}
+                        breadCrumbItems={[]}
                         title={'All Clients'}
                     />
                 </Col>

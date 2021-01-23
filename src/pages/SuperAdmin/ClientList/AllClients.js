@@ -167,7 +167,7 @@ const AllClients = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-							  let res = await Axios.get(`http://localhost:8000/api/sAdmin/getClient/${row._id}`)
+							  let res = await Axios.get(`https://dry-falls-55056.herokuapp.com/api/sAdmin/getClient/${row._id}`)
 			          if(res.data){
 									setFormData(res.data)
 									handleShowClients()
@@ -188,7 +188,7 @@ const AllClients = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-							  let res = await Axios.post(`http://localhost:8000/api/sAdmin/deleteClient/${row._id}`)
+							  let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/deleteClient/${row._id}`)
 			          if(res.data.massage === 'done'){
 									alert('Deleted Client')
 									window.location.reload(false)
@@ -207,13 +207,13 @@ const AllClients = () => {
     useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "http://localhost:8000/api/newClients"
+            "https://dry-falls-55056.herokuapp.com/api/newClients"
 				);
 				const branches = await Axios.get(
-            "http://localhost:8000/api/sAdmin/branches"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/branches"
 				);
 				const coaches = await Axios.get(
-            "http://localhost:8000/api/sAdmin/coaches"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/coaches"
         );
 				if(result){
 					setRecords(result.data)
@@ -256,7 +256,7 @@ const AllClients = () => {
 		}
 
     const submitBranch = async() => {
-			await Axios.post(`http://localhost:8000/api/sAdmin/allocateBranch/${userId}/${branchId}/${branchName}`)
+			await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/allocateBranch/${userId}/${branchId}/${branchName}`)
 			setShow(false)   
 			window.location.reload(false)    
 		};
@@ -268,19 +268,19 @@ const AllClients = () => {
 		};
 
 		const submitCoach = async() => {
-			await Axios.post(`http://localhost:8000/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
+			await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/allocateCoach/${userId}/${coachId}/${coachName}`)
 			setShowCoach(false)       
 		};
 
 		const submitForm = async() => {	
 
-			const { full_name , phone_number , email , gender , age , city , state , pincode , language , DOB , isPatient,_id} = formData;
+			const { full_name , phone_number , email , gender , age , city , state , pincode , language , DOB , isPatient} = formData;
 			if (!full_name || !phone_number || !email || !gender || !age || !city || !state || !pincode || !language || !DOB || !isPatient){
 				alert('Fill all the Fields')
 				return
 			}
 			try{
-				await Axios.post(`http://localhost:8000/api/sAdmin/newClient`,{...formData})
+				await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newClient`,{...formData})
 				setShow(false)
 				if(formData._id){
 					alert('Client Updated')
@@ -301,11 +301,7 @@ const AllClients = () => {
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
-                        breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/clientlist/allclients' },
-                            { label: 'ClientList', path: '/superadmin/clientlist/allclients' },
-                            { label: 'AllClients', path: '/superadmin/clientlist/allclients', active: true },
-                        ]}
+                        breadCrumbItems={[]}
                         title={'All Clients'}
                     />
                 </Col>

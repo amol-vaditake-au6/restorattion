@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Card, CardBody, Media } from 'reactstrap';
 import { Modal, Button } from 'react-bootstrap';
-import { AutoScroll } from 'sortablejs';
 
 
 import ButtonCarousel from '../../components/ButtonCarousel';
@@ -21,14 +19,6 @@ import {
 } from 'react-bootstrap-icons';
 
 import './clientDetails.scss';
-const usertype = localStorage.getItem('usertype');
-const clientDetailsData = [
-    {
-        title: 'Daily Checklist',
-        icon: 'CardChecklist',
-        link: `/${usertype}/dailychecklist`,
-    },
-];
 
 // const [show, setShow] = useState(false);
 
@@ -71,7 +61,7 @@ class ClientDetails extends React.Component {
         if (this.state.dailyChecklist) {
             mainAreaContent = <DailyChecklist buttonNumber={this.state.buttonNumber} className="" />;
         } else if (this.state.dailyMenu) {
-            mainAreaContent = <DailyMenu className="daily-menu" />;
+            mainAreaContent = <DailyMenu buttonNumber={this.state.buttonNumber} className="daily-menu" />;
         } else if (this.state.prescription) {
             mainAreaContent = <Prescription className="" />;
         }

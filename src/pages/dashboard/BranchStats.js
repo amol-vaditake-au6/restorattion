@@ -8,16 +8,17 @@ const Statistics = () => {
 	const [records,setRecords]=useState({})
 	useEffect(() => {
     (async () => {
-        const user = await axios.get(
-            "https://dry-falls-55056.herokuapp.com/api/newClients"
-				);
 				const branches = await axios.get(
             "https://dry-falls-55056.herokuapp.com/api/sAdmin/branches"
+				);
+				let myBranches = branches?.data?.filter(b=>b.adminId===localStorage.getItem('id'))
+				const clients = await axios.get(
+            `https://dry-falls-55056.herokuapp.com/api/bAdmin/myClients/${localStorage.getItem('id')}`
 				);
 				const coaches = await axios.get(
             "https://dry-falls-55056.herokuapp.com/api/sAdmin/coaches"
         );
-        setRecords({user:user.data?.length,branches:branches.data?.length,coaches:coaches.data?.length});
+        setRecords({branches:myBranches.length,coaches:coaches.data?.length,user:clients.data.length});
     })();
 		}, []);
     return (
@@ -25,7 +26,7 @@ const Statistics = () => {
             <Row>
                 <Col md={6} xl={3}>
                     <StatisticsChartWidget
-                        description="All Branches"
+                        description="All My Branches"
                         title={records?.branches || 0}
                         data={[25, 66, 41, 85, 63, 25, 44, 12, 36, 9, 54]}
                         trend={{
@@ -50,7 +51,7 @@ const Statistics = () => {
 
                 <Col md={6} xl={3}>
                     <StatisticsChartWidget
-                        description="All Clients"
+                        description="All My Clients"
                         title={records?.user || 0}
                         colors={['#43d39e']}
                         data={[25, 66, 41, 85, 63, 25, 44, 12, 36, 9, 54]}
@@ -58,19 +59,6 @@ const Statistics = () => {
                             textClass: 'text-success',
                             icon: 'uil uil-arrow-up',
                             value: '25.16%',
-                        }}></StatisticsChartWidget>
-                </Col>
-
-                <Col md={6} xl={3}>
-                    <StatisticsChartWidget
-                        description="New Clients"
-                        title={records?.user || 0}
-                        colors={['#ffbe0b']}
-                        data={[25, 66, 41, 85, 63, 25, 44, 12, 36, 9, 54]}
-                        trend={{
-                            textClass: 'text-danger',
-                            icon: 'uil uil-arrow-down',
-                            value: '5.05%',
                         }}></StatisticsChartWidget>
                 </Col>
             </Row>

@@ -42,7 +42,7 @@ const AllBranches = () => {
 		useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "http://localhost:8000/api/sAdmin/getAdmins"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/getAdmins"
         );
 				if(result)setRecords(result.data);
     })();
@@ -65,7 +65,7 @@ const AllBranches = () => {
 					alert('Fill All the Fileds')
 					return
 			} 
-			let res = await Axios.post(`http://localhost:8000/api/sAdmin/newAdmin`,{...formData})
+			let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newAdmin`,{...formData})
 			if(res.data.massage==='done'){
 				if(formData._id){
 					alert('Admin Updated')	
@@ -134,7 +134,7 @@ const AllBranches = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-								let res = await Axios.get(`http://localhost:8000/api/sAdmin/getAdmin/${row._id}`)
+								let res = await Axios.get(`https://dry-falls-55056.herokuapp.com/api/sAdmin/getAdmin/${row._id}`)
 			          if(res.data){
 									setFormData(res.data)
 									setShowAdmin(true)       
@@ -152,7 +152,7 @@ const AllBranches = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-							  let res = await Axios.post(`http://localhost:8000/api/sAdmin/deleteAdmin/${row._id}`)
+							  let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/deleteAdmin/${row._id}`)
 			          if(res.data.massage === 'done'){
 									alert('Deleted Admin')
 									window.location.reload()
@@ -183,11 +183,7 @@ const AllBranches = () => {
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
-                        breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/branchcoach/allbranches' },
-                            { label: 'ClientList', path: '/superadmin/branchcoach/allbranches' },
-                            { label: 'AllClients', path: '/superadmin/branchcoach/allbranches', active: true },
-                        ]}
+                        breadCrumbItems={[]}
                         title={'All Branches'}
                     />
                 </Col>

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Row, Col, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import Flatpickr from 'react-flatpickr'
-import { ChevronDown, Mail, Printer, File, Users, Image, ShoppingBag } from 'react-feather';
+import { ChevronDown, Mail, Printer, File } from 'react-feather';
 
 import Loader from '../../components/Loader';
-import OverviewWidget from '../../components/OverviewWidget';
 
-import Statistics from './Statistics';
+import SuperAdminStats from './Statistics';
+import CoachStats from './CoachStats'
+import BranchStats from './BranchStats'
 
 
 class Dashboard extends Component {
@@ -26,7 +27,6 @@ class Dashboard extends Component {
 			let user=localStorage.getItem('usertype')
         return (
             <React.Fragment>
-							{console.log(user)}
                 <div className="">
                     { /* preloader */}
                     {this.props.loading && <Loader />}
@@ -68,47 +68,9 @@ class Dashboard extends Component {
                     </Row>
 
                     {/* stats */}
-                    <Statistics></Statistics>
-
-                    {/* charts */}
-                    <Row>
-                        <Col xl={3}>
-                            <OverviewWidget items={[
-                                { title: '121,000', description: 'Total Visitors', icon: Users },
-                                { title: '21,000', description: 'Product Views', icon: Image },
-                                { title: '$21.5', description: 'Revenue Per Visitor', icon: ShoppingBag }
-                            ]}></OverviewWidget>
-                        </Col>
-
-                        {/* <Col xl={6}>
-                            <RevenueChart />
-                        </Col>
-                        <Col xl={3}>
-                            <TargetChart />
-                        </Col> */}
-                    </Row>
-
-                    {/* charts */}
-                    {/* <Row>
-                        <Col xl={5}>
-                            <SalesChart />
-                        </Col>
-                        <Col xl={7}>
-                            <Orders />
-                        </Col>
-                    </Row> */}
-
-                    {/* <Row>
-                        <Col xl={4}>
-                            <Performers />
-                        </Col>
-                        <Col xl={4}>
-                            <Tasks />
-                        </Col>
-                        <Col xl={4}>
-                            <Chat />
-                        </Col>
-                    </Row> */}
+                    { user ==='superadmin' &&<SuperAdminStats></SuperAdminStats>}
+										{ user ==='branchadmin' &&<BranchStats></BranchStats>}
+										{ user ==='coach' &&<CoachStats></CoachStats>}
                 </div>
             </React.Fragment>
         )

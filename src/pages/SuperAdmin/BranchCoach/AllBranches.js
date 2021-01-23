@@ -43,12 +43,12 @@ const AllBranches = () => {
 		useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "http://localhost:8000/api/sAdmin/branches"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/branches"
         );
 				if(result)setRecords(result.data);
 				
 				const admins = await Axios.get(
-            "http://localhost:8000/api/sAdmin/getAdmins"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/getAdmins"
 				);
 
 				let adminOptionsAll;
@@ -76,7 +76,7 @@ const AllBranches = () => {
 					return
 				}
 			try {
-				await Axios.post(`http://localhost:8000/api/sAdmin/newBranch`,{...formData})				
+				await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newBranch`,{...formData})				
 				setShow(false)
 				if(formData._id){
 					alert('Branch Updated')
@@ -99,7 +99,7 @@ const AllBranches = () => {
 					alert('Fill All the Fileds')
 					return
 			} 
-			let res = await Axios.post(`http://localhost:8000/api/sAdmin/newAdmin`,{...formData})
+			let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newAdmin`,{...formData})
 			if(res.data.massage==='done'){
 				alert('Admin Added successfully')				
 			  setShowAdmin(false) 
@@ -230,7 +230,7 @@ const AllBranches = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-							  let res = await Axios.get(`http://localhost:8000/api/sAdmin/getBranch/${row._id}`)
+							  let res = await Axios.get(`https://dry-falls-55056.herokuapp.com/api/sAdmin/getBranch/${row._id}`)
 			          if(res.data){
 									setFormData(res.data)
 									setShow(true)
@@ -248,7 +248,7 @@ const AllBranches = () => {
 						events:{
 							onClick: async(e, column, columnIndex, row) => {							
 							if(localStorage.getItem('usertype')==='superadmin'){
-							  let res = await Axios.post(`http://localhost:8000/api/sAdmin/deleteBranch/${row._id}`)
+							  let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/deleteBranch/${row._id}`)
 			          if(res.data.massage === 'done'){
 									alert('Deleted Branch')
 									window.location.reload()
@@ -276,7 +276,7 @@ const AllBranches = () => {
 		}
 		let submitAdmin=async()=>{
 			try {
-				let res = await Axios.post(`http://localhost:8000/api/sAdmin/allocateAdmin/${branchId}`,{ adminName, adminId})	
+				let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/allocateAdmin/${branchId}`,{ adminName, adminId})	
 				if(res.data.massage === 'done'){
 					alert('Admin Added')					
 				  setShow(false)					
@@ -293,11 +293,7 @@ const AllBranches = () => {
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
-                        breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/branchcoach/allbranches' },
-                            { label: 'ClientList', path: '/superadmin/branchcoach/allbranches' },
-                            { label: 'AllClients', path: '/superadmin/branchcoach/allbranches', active: true },
-                        ]}
+                        breadCrumbItems={[]}
                         title={'All Branches'}
                     />
                 </Col>

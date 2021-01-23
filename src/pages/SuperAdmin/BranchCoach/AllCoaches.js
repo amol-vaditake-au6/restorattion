@@ -104,7 +104,7 @@ const AllCoaches = () => {
 				events:{
 					onClick: async(e, column, columnIndex, row) => {							
 					if(localStorage.getItem('usertype')==='superadmin'){
-						let res = await Axios.get(`http://localhost:8000/api/sAdmin/getCoach/${row._id}`)
+						let res = await Axios.get(`https://dry-falls-55056.herokuapp.com/api/sAdmin/getCoach/${row._id}`)
 						if(res.data){
 							setFormData(res.data)
 							setShow(true)
@@ -122,7 +122,7 @@ const AllCoaches = () => {
 				events:{
 									onClick: async(e, column, columnIndex, row) => {							
 									if(localStorage.getItem('usertype') === 'superadmin'){
-										let res = await Axios.post(`http://localhost:8000/api/sAdmin/deleteCoach/${row._id}`)
+										let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/deleteCoach/${row._id}`)
 										if(res.data.massage === 'done'){
 											alert('Deleted Coach')
 											window.location.reload()
@@ -147,7 +147,7 @@ const AllCoaches = () => {
     useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "http://localhost:8000/api/sAdmin/coaches"
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/coaches"
         );
         if(result)setRecords(result.data);
     })();
@@ -171,7 +171,7 @@ const AllCoaches = () => {
 				return
 			}
 			try{
-				await Axios.post(`http://localhost:8000/api/sAdmin/newCoach`,{...formData})
+				await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newCoach`,{...formData})
 				setShow(false)
 				if(formData._id){
 					alert('Coach Updated')
@@ -197,11 +197,7 @@ const AllCoaches = () => {
             <Row className="page-title">
                 <Col className="col-12">
                     <PageTitle
-                        breadCrumbItems={[
-                            { label: 'SuperAdmin', path: '/superadmin/branchcoach/allcoaches' },
-                            { label: 'ClientList', path: '/superadmin/branchcoach/allcoaches' },
-                            { label: 'AllClients', path: '/superadmin/branchcoach/allcoaches', active: true },
-                        ]}
+                        breadCrumbItems={[]}
                         title={'All Coaches'}
                     />
                 </Col>
