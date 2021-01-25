@@ -92,13 +92,13 @@ const AllBranches = () => {
 		
 		const deleteFormatter=function(){
 			return (
-					<Button>Delete</Button>
+					<Button className="btn btn-success">Delete</Button>
 				);
 		}
 
 		const editFormatter=function(){
 			return (
-					<Button>Edit</Button>
+					<Button className="btn btn-success">Edit</Button>
 				);
 		}
 	 const columns = [
@@ -282,7 +282,7 @@ const AllBranches = () => {
 								<Button variant="secondary" onClick={handleClose}>
 									Cancel
 								</Button>
-								<Button variant="primary" onClick={submitFormAdmin}>
+								<Button variant="success" onClick={submitFormAdmin}>
 									Submit
 								</Button>
 							</Modal.Footer>

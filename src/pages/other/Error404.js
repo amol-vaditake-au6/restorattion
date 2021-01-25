@@ -36,7 +36,7 @@ class Error404 extends Component {
                                 <h3 className="mt-3">We couldn’t connect the dots</h3>
                                 <p className="text-muted mb-5">This page was not found. <br /> You may have mistyped the address or the page may have moved.</p>
 
-                                <Link to="/" className="btn btn-lg btn-primary mt-4">Take me back to Home</Link>
+                                <Link to="/" className="btn btn-lg btn-success mt-4">Take me back to Home</Link>
                             </Col>
                         </Row>
                     </Container>

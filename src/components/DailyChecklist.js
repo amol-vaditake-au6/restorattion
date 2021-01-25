@@ -120,7 +120,7 @@ const DailyCheckList = function({buttonNumber}) {
 						<Button variant="secondary" onClick={handleClose}>
 							Cancel
 						</Button>
-						<Button variant="primary" onClick={submitForm}>
+						<Button variant="success" onClick={submitForm}>
 							Submit
 						</Button>
 					</Modal.Footer>

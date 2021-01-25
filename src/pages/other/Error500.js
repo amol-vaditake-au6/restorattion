@@ -36,7 +36,7 @@ class Error500 extends Component {
                                 <h3 className="mt-3">Opps, something went wrong</h3>
                                 <p className="text-muted mb-5">Server Error 500. We apoligise and are fixing the problem.<br /> Please try again at a later stage.</p>
 
-                                <Link to="/" className="btn btn-lg btn-primary mt-4">Take me back to Home</Link>
+                                <Link to="/" className="btn btn-lg btn-success mt-4">Take me back to Home</Link>
                             </Col>
                         </Row>
                     </Container>

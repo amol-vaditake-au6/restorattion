@@ -203,7 +203,7 @@ const DailyMenu = ({buttonNumber}) => {
 						<Button variant="secondary" onClick={handleClose}>
 							Cancel
 						</Button>
-						<Button variant="primary" onClick={lunchSubmitHandler}>
+						<Button variant="success" onClick={lunchSubmitHandler}>
 							Submit
 						</Button>
 					</Modal.Footer>
@@ -233,7 +233,7 @@ const DailyMenu = ({buttonNumber}) => {
 						<Button variant="secondary" onClick={handleClose}>
 							Cancel
 						</Button>
-						<Button variant="primary" onClick={dinnerSubmitHandler}>
+						<Button variant="success" onClick={dinnerSubmitHandler}>
 							Submit
 						</Button>
 					</Modal.Footer>
@@ -263,7 +263,7 @@ const DailyMenu = ({buttonNumber}) => {
 						<Button variant="secondary" onClick={handleClose}>
 							Cancel
 						</Button>
-						<Button variant="primary" onClick={breakFastSubmitHandler}>
+						<Button variant="success" onClick={breakFastSubmitHandler}>
 							Submit
 						</Button>
 					</Modal.Footer>

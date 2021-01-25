@@ -72,7 +72,7 @@ const Pricing = () => {
                                             </ul>
 
                                             <div className="mt-5 text-center">
-                                                <button className={classNames("btn", { "btn-soft-primary": !plan.isRecommended, 'btn-primary': plan.isRecommended }, "px-sm-4")}><i className='uil uil-arrow-right mr-1'></i>Buy Now for {plan.price}</button>
+                                                <button className={classNames("btn", { "btn-soft-primary": !plan.isRecommended, 'btn-success': plan.isRecommended }, "px-sm-4")}><i className='uil uil-arrow-right mr-1'></i>Buy Now for {plan.price}</button>
                                             </div>
                                         </CardBody>
                                     </Card>

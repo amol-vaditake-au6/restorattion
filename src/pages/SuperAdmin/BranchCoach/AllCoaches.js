@@ -37,13 +37,13 @@ const sizePerPageRenderer = ({ options, currSizePerPage, onSizePerPageChange }) 
 const AllCoaches = () => {
 	 	const deleteFormatter=function(){
 			return (
-					<Button>Delete</Button>
+					<Button className="btn btn-success">Delete</Button>
 				);
 		}
 
 		const editFormatter=function(){
 			return (
-					<Button>Edit</Button>
+					<Button className="btn btn-success">Edit</Button>
 				);
 		}
 
@@ -336,7 +336,7 @@ const AllCoaches = () => {
 								<Button variant="secondary" onClick={handleClose}>
 									Cancel
 								</Button>
-								<Button variant="primary" onClick={submitForm}>
+								<Button variant="success" onClick={submitForm}>
 									Submit
 								</Button>
 							</Modal.Footer>

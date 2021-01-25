@@ -51,13 +51,13 @@ const AllClients = () => {
 
 		const deleteFormatter=function(){
 			return (
-					<Button>Delete</Button>
+					<Button className="btn btn-success">Delete</Button>
 				);
 		}
 
 		const editFormatter=function(){
 			return (
-					<Button>Edit</Button>
+					<Button className="btn btn-success">Edit</Button>
 				);
 		}
 			const columns = [
@@ -378,7 +378,7 @@ const AllClients = () => {
 								<Button variant="secondary" onClick={handleCloseCommon}>
 									Close
 								</Button>
-								<Button variant="primary" onClick={submitBranch}>
+								<Button variant="success" onClick={submitBranch}>
 									Allocate Branch
 								</Button>
 							</Modal.Footer>
@@ -399,7 +399,7 @@ const AllClients = () => {
 								<Button variant="secondary" onClick={handleCloseCommon}>
 									Close
 								</Button>
-								<Button variant="primary" onClick={submitCoach}>
+								<Button variant="success" onClick={submitCoach}>
 									Allocate Coach
 								</Button>
 							</Modal.Footer>
@@ -488,7 +488,7 @@ const AllClients = () => {
 								<Button variant="secondary" onClick={handleCloseCommon}>
 									Cancel
 								</Button>
-								<Button variant="primary" onClick={submitForm}>
+								<Button variant="success" onClick={submitForm}>
 									Submit
 								</Button>
 							</Modal.Footer>

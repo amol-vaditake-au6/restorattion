@@ -152,7 +152,7 @@ class ThemeCustomizer extends Component {
         return (
             <React.Fragment>
                 <div className="mt-2 p-2">
-                    <div className="alert alert-primary" role="alert">
+                    <div className="alert alert-success" role="alert">
                         <strong>Customize the layout, sidebar menu, etc</strong>
                     </div>
                 </div>

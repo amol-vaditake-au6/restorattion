@@ -43,7 +43,7 @@ class Dashboard extends Component {
                                         className="form-control" />
                                 </div>
                                 <UncontrolledButtonDropdown>
-                                    <DropdownToggle color="primary" className="dropdown-toggle">
+                                    <DropdownToggle color="success" className="dropdown-toggle">
                                         <i className='uil uil-file-alt mr-1'></i>Download
                                             <i className="icon ml-1"><ChevronDown /></i>
                                     </DropdownToggle>

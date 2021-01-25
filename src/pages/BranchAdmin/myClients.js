@@ -256,7 +256,7 @@ const AllClients = () => {
 								<Button variant="secondary" onClick={handleCloseCommon}>
 									Close
 								</Button>
-								<Button variant="primary" onClick={submitCoach}>
+								<Button variant="success" onClick={submitCoach}>
 									Allocate Coach
 								</Button>
 							</Modal.Footer>
