@@ -37,6 +37,7 @@ const sizePerPageRenderer = ({ options, currSizePerPage, onSizePerPageChange }) 
 const AllBranches = () => {
 
 		const [records,setRecords]=useState([])
+		const [fetch,setFetch]=useState(false)
 		const [adminOptions, setAdminOptions] = useState([]);
     const { SearchBar } = Search;
     const { ExportCSVButton } = CSVExport;
@@ -44,7 +45,7 @@ const AllBranches = () => {
     (async () => {
         const result = await Axios.get(
             "https://dry-falls-55056.herokuapp.com/api/sAdmin/branches"
-        );
+				);
 				if(result)setRecords(result.data);
 				
 				const admins = await Axios.get(
@@ -58,7 +59,7 @@ const AllBranches = () => {
 					setAdminOptions(adminOptionsAll)
 				}
     })();
-    }, []);
+    }, [fetch]);
 		const [show, setShow] = useState(false);
 		const [showAdmin, setShowAdmin] = useState(false);
 		const [formData, setFormData] = useState({});
@@ -70,22 +71,28 @@ const AllBranches = () => {
 		};
 
 		const submitForm = async() => {
-			const { GPSlocation, address, district, state, adminName='Click To Allocate', email,name} = formData;
-        if (!GPSlocation || !address || !district || !state || !adminName ||  !email || !name){
+			const { latitude,longitude, address, district, state, adminName='Click To Allocate', email,name,description} = formData;
+        if (!latitude || !longitude || !address || !district || !state || !adminName ||  !email || !name || !description){
 					alert('Fill all the Fields')
 					return
 				}
 			try {
-				await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newBranch`,{...formData})				
-				setShow(false)
-				if(formData._id){
+				let data=await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newBranch`,{...formData})	
+				console.log(data)
+				if( data.data.massage ==='done'){
+					if(formData._id){
 					alert('Branch Updated')
-				}else{
-				  alert('Branch Added')
+					}else{
+						alert('Branch Added')
+					}					
+					setFetch(!fetch)							
+				  setShow(false)
+				} else {						
+					alert('Validation Error')
 				}
-				window.location.reload()
 			}catch(err){
-         alert('Match Failed duplicate name Found ')
+				console.log(err)
+        alert('Match Failed duplicate name Found ')
 			}       
 		};
 
@@ -148,14 +155,6 @@ const AllBranches = () => {
 				{
 						text: 'Name',
 						dataField: 'name',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
-						sort: true,
-				},
-				{
-						text: 'GPS Location',
-						dataField: 'GPSlocation',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
@@ -251,7 +250,7 @@ const AllBranches = () => {
 							  let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/deleteBranch/${row._id}`)
 			          if(res.data.massage === 'done'){
 									alert('Deleted Branch')
-									window.location.reload()
+									setFetch(!fetch)
 								}
 							}else{
 								alert('You are Not Super Admin')
@@ -279,8 +278,8 @@ const AllBranches = () => {
 				let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/allocateAdmin/${branchId}`,{ adminName, adminId})	
 				if(res.data.massage === 'done'){
 					alert('Admin Added')					
-				  setShow(false)					
-				  window.location.reload()
+				  setAllocateAdmin(false)					
+				  setFetch(!fetch)
 				} else {
 				  alert(res.data.massage)
 				}
@@ -381,12 +380,22 @@ const AllBranches = () => {
 										</Row>
 										<Row>
 											<Col>
-											<Form.Label>Location</Form.Label>
-											<Form.Control required value={formData.GPSlocation} name='GPSlocation' onChange={handleFormData} placeholder="Gps Location" />
+											<Form.Label>Latitude</Form.Label>
+											<Form.Control required value={formData.latitude} name='latitude' type='number' min="0" onChange={handleFormData} placeholder="latitude" />
 											</Col>
+											<Col>
+											<Form.Label>Longitude</Form.Label>
+											<Form.Control required value={formData.longitude} name='longitude' type='number' min="0" onChange={handleFormData} placeholder="Longitude" />
+											</Col>
+										</Row>
+										<Row>
 											<Col>
 											  <Form.Label>Addreess</Form.Label>
 												<Form.Control value={formData.address} required onChange={handleFormData} name="address" placeholder="Addreess" />
+											</Col>
+											<Col>
+											  <Form.Label>Description</Form.Label>
+												<Form.Control value={formData.description} required onChange={handleFormData} type='textArea' name="description" placeholder="Description" />
 											</Col>
 										</Row>
 									</Form.Row>

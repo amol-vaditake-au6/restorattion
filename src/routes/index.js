@@ -22,6 +22,9 @@ const AdminClients = React.lazy(() => import('../pages/BranchAdmin/myClients'));
 const AllBranches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/AllBranches'));
 const AllCoaches = React.lazy(() => import('../pages/SuperAdmin/BranchCoach/AllCoaches'));
 const AllAdmins = React.lazy(() => import('../pages/SuperAdmin/AllAdmins'));
+
+const AllDisease = React.lazy(() => import('../pages/SuperAdmin/AllDisease'));
+
 const AllMyBranches = React.lazy(() => import('../pages/BranchAdmin/MyBranches.js'));
 
 const  BranchCoachAllClients = React.lazy(()=>import('../pages/BranchCoach/BranchCoachAllClients'));
@@ -104,6 +107,12 @@ const superAdminRoutesNew = {
             path: '/superadmin/branch/allAdmins',
             name: 'All Admins',
             component: AllAdmins,
+            route: PrivateRoute,        
+				},
+				{
+            path: '/superadmin/allDisease',
+            name: 'All Disease',
+            component: AllDisease,
             route: PrivateRoute,
         
         },

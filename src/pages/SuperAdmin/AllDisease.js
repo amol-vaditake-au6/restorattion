@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import { Button ,Modal,Form} from 'react-bootstrap';
 import Axios from 'axios';
 import {
     Row,
@@ -36,28 +37,67 @@ const sizePerPageRenderer = ({ options, currSizePerPage, onSizePerPageChange }) 
 const AllBranches = () => {
 
 		const [records,setRecords]=useState([])
+		const [fetch,setFetch]=useState(false)
     const { SearchBar } = Search;
     const { ExportCSVButton } = CSVExport;
 		useEffect(() => {
     (async () => {
         const result = await Axios.get(
-            "https://dry-falls-55056.herokuapp.com/api/sAdmin/branches"
-				);
-				let myResults = result?.data?.filter(b=>b.adminId===localStorage.getItem('id'))
-				if(myResults)setRecords(myResults);
+            "https://dry-falls-55056.herokuapp.com/api/sAdmin/getAllDisease"
+        );
+				if(result)setRecords(result.data);
     })();
-    }, []);		
+    }, [fetch]);
 
+		const [show, setShow] = useState(false);
+		const [formData, setFormData] = useState({});
 
+		const handleClose = () => {
+			setShow(false)     
+		};
+
+	 const submitForm = async() => {
+			const { name ,price } = formData;
+			if (!name || !price) {
+					alert('Fill All the Fileds')
+					return
+			} 
+			let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/newDisease`,{...formData})
+			if(res.data.massage === 'done'){
+				if(formData._id){
+					alert('Disease Updated')	
+				} else {
+				alert('Disease Added successfully')		
+				}
+				setShow(false) 
+				setFetch(!fetch)
+				return
+			} else {
+				alert('Validation error')
+				return
+			}     
+		};
+
+		const handleShow = () => {
+			setShow(true)       
+		};
+
+		const handleFormData = e => {
+      setFormData({ ...formData,[e.target.name]: e.target.value });
+		};
+		
+		const deleteFormatter=function(){
+			return (
+					<Button className="btn btn-success">Delete</Button>
+				);
+		}
+
+		const editFormatter=function(){
+			return (
+					<Button className="btn btn-success">Edit</Button>
+				);
+		}
 	 const columns = [
-				{
-						text: 'Branch ID',
-						dataField: '_id',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
-						sort: true,
-				},
 				{
 						text: 'Name',
 						dataField: 'name',
@@ -67,57 +107,48 @@ const AllBranches = () => {
 						sort: true,
 				},
 				{
-						text: 'Address',
-						dataField: 'address',
+						text: 'Price',
+						dataField: 'price',
 						headerStyle: (colum, colIndex) => {
 								return { 'white-space': 'nowrap' };
 						},
 						sort: true,
 				},
 				{
-						text: 'District',
-						dataField: 'district',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
+						text: 'Edit',
+						dataField: 'Edit',
+						formatter: editFormatter,
 						sort: true,
+						events:{
+							onClick: async(e, column, columnIndex, row) => {							
+							if(localStorage.getItem('usertype') === 'superadmin'){
+								let res = await Axios.get(`https://dry-falls-55056.herokuapp.com/api/sAdmin/disease/${row._id}`)
+			          if(res.data){
+									setFormData(res.data)
+									setShow(true)       
+								}
+							}else{
+								alert('You are Not Super Admin')
+							}
+						}},
 				},
 				{
-						text: 'State',
-						dataField: 'state',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
+						text: 'Delete',
+						dataField: 'Delete',
+						formatter: deleteFormatter,
 						sort: true,
-				},
-				{
-						text: 'Admin',
-						dataField: 'adminName',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
-						sort: true,					
-				},
-				{
-						text: 'Contact',
-						dataField: 'adminContact',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
-						sort: true,
-				},
-				{
-						text: 'Active Clients',
-						dataField: 'active_clients',
-						sort: true,
-				},
-				{
-						text: 'Coaches',
-						dataField: 'coaches',
-						headerStyle: (colum, colIndex) => {
-								return { 'white-space': 'nowrap' };
-						},
-						sort: true,
+						events:{
+							onClick: async(e, column, columnIndex, row) => {							
+							if(localStorage.getItem('usertype')==='superadmin'){
+							  let res = await Axios.post(`https://dry-falls-55056.herokuapp.com/api/sAdmin/delete/disease/${row._id}`)
+			          if(res.data.massage === 'done'){
+									alert('Deleted Disease')
+									setFetch(!fetch)
+								}
+							}else{
+								alert('You are Not Super Admin')
+							}
+						}},
 				},
 		];
 
@@ -127,7 +158,14 @@ const AllBranches = () => {
 						order: 'asc',
 				},
 		];
-
+	  // const [adminId, setAdminId] = useState();
+		// const [adminName, setAdminName] = useState();
+		// const handleChange=(e)=>{
+		// 	let index = e.nativeEvent.target.selectedIndex;
+		// 	let label = e.nativeEvent.target[index].text;
+		// 	setAdminId(e.target.value)
+		// 	setAdminName(label)			
+		// }
     return (
         <React.Fragment>
             <Row className="page-title">
@@ -178,7 +216,7 @@ const AllBranches = () => {
                                                 ],
                                             })}
                                             wrapperClasses="table-responsive"
-                                        />:<h3 style={{textAlign:'center'}}>No Branches Found</h3>}
+                                        />:<h3 style={{textAlign:'center'}}>No Admins Found</h3>}
                                     </React.Fragment>
                                 )}
                             </ToolkitProvider>
@@ -187,6 +225,40 @@ const AllBranches = () => {
                 </Col>
             </Row>
 						<Row>
+						<Col className="text-right">
+							  <button className="btn btn-success" onClick={handleShow} style={{marginRight:'20px'}}>
+                  Add New Disease
+                </button>
+            </Col>
+						<Modal show={show} onHide={handleClose}>
+							<Modal.Header closeButton>
+								<Modal.Title>Add New Disease</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								<Form>
+									<Form.Row>
+										<Row>
+											<Col>
+											  <Form.Label>Name</Form.Label>
+											  <Form.Control required onChange={handleFormData} name="name" value={formData.name} placeholder="Name of disease" />
+										  </Col>
+											<Col>
+											  <Form.Label>Price</Form.Label>
+											  <Form.Control  value={formData.price} required onChange={handleFormData} type='number' min="1" name="price" placeholder="Price" />
+										  </Col>
+										</Row>
+									</Form.Row>
+								</Form>								
+							</Modal.Body>
+							<Modal.Footer>
+								<Button variant="secondary" onClick={handleClose}>
+									Cancel
+								</Button>
+								<Button variant="success" onClick={submitForm}>
+									Submit
+								</Button>
+							</Modal.Footer>
+						</Modal>
 						</Row>
         </React.Fragment>
     );
